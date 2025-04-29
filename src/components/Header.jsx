@@ -1,0 +1,63 @@
+"use client"
+import { Button } from "@/components/ui/button";
+import { Building, LogOut, User } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+import {
+    Avatar,
+    AvatarFallback,
+    AvatarImage,
+} from "@/components/ui/avatar"
+import NavMenu from "./NavMenu";
+
+const Header = () => {
+    return (
+        <header className="header shadow-md py-6">
+            <div className="container">
+                <div className="header__inner flex justify-between items-center">
+                    <div className="logo">
+                        <Image src="next.svg" alt="Logo" width={120} height={40} />
+                    </div>
+                    <NavMenu />
+                    <div className="btns">
+                        {/* <Button variant={"outline"} size={"lg"}>
+              <User />
+              Giriş
+            </Button> */}
+                        <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                                <Avatar className="w-10 h-10 cursor-pointer">
+                                    <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
+                                    <AvatarFallback>CN</AvatarFallback>
+                                </Avatar>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent className="mt-5 mr-15">
+                                <DropdownMenuLabel>Hesabım</DropdownMenuLabel>
+                                <DropdownMenuSeparator />
+                                <DropdownMenuItem>Vakansiyalarım</DropdownMenuItem>
+                                <DropdownMenuItem asChild variant="">
+                                    <Link href="/my-company">Şirkətim</Link>
+                                </DropdownMenuItem>
+                                <DropdownMenuSeparator />
+                                <DropdownMenuItem variant="destructive" onClick={() => console.log("Hello")}>
+                                    <LogOut />
+                                    Logout
+                                </DropdownMenuItem>
+                            </DropdownMenuContent>
+                        </DropdownMenu>
+                    </div>
+                </div>
+            </div>
+        </header>
+    )
+}
+
+export default Header
