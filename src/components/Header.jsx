@@ -17,8 +17,11 @@ import {
     AvatarImage,
 } from "@/components/ui/avatar"
 import NavMenu from "./NavMenu";
+import { signOut, useSession } from "next-auth/react";
 
 const Header = () => {
+    const {data} = useSession();
+    console.log(data)
     return (
         <header className="header shadow-md py-6">
             <div className="container">
@@ -36,18 +39,18 @@ const Header = () => {
                             <DropdownMenuTrigger asChild>
                                 <Avatar className="w-10 h-10 cursor-pointer">
                                     <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
-                                    <AvatarFallback>CN</AvatarFallback>
+                                    {/* <AvatarFallback>{data?.user?.name}</AvatarFallback> */}
                                 </Avatar>
                             </DropdownMenuTrigger>
                             <DropdownMenuContent className="mt-5 mr-15">
-                                <DropdownMenuLabel>Hesabım</DropdownMenuLabel>
+                                <DropdownMenuLabel>Salam, {data?.user?.name}</DropdownMenuLabel>
                                 <DropdownMenuSeparator />
                                 <DropdownMenuItem>Vakansiyalarım</DropdownMenuItem>
                                 <DropdownMenuItem asChild variant="">
                                     <Link href="/my-company">Şirkətim</Link>
                                 </DropdownMenuItem>
                                 <DropdownMenuSeparator />
-                                <DropdownMenuItem variant="destructive" onClick={() => console.log("Hello")}>
+                                <DropdownMenuItem variant="destructive" onClick={() => signOut({callbackUrl: "/"})}>
                                     <LogOut />
                                     Logout
                                 </DropdownMenuItem>

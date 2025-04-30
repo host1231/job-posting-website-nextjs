@@ -1,11 +1,9 @@
 "use client"
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { z } from "zod";
 import {
     Form,
     FormControl,
-    FormDescription,
     FormField,
     FormItem,
     FormLabel,
@@ -15,12 +13,19 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod"
 import Link from "next/link";
 import InputPassword from "@/components/InputPassword";
-import { authFormSchema } from "@/lib/helper";
+import { signupSchema } from "@/lib/helper";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
+import { Loader } from "lucide-react";
+import { useState } from "react";
 
 
 const SignUp = () => {
+    const [isLoading, setIsLoading] = useState(false);
+    const router = useRouter();
+
     const form = useForm({
-        resolver: zodResolver(authFormSchema),
+        resolver: zodResolver(signupSchema),
         defaultValues: {
             username: "",
             email: "",
@@ -28,9 +33,31 @@ const SignUp = () => {
         }
     })
 
-    function onSubmit(values) {
-        console.log(values)
-        form.reset()
+    async function onSubmit(values) {
+        try {
+            setIsLoading(true);
+            const res = await fetch("/api/register", {
+                method: "POST",
+                body: JSON.stringify(values),
+                headers: { "Content-Type": "application/json" }
+            });
+            const data = await res.json();
+
+            if (res.ok) {
+                toast.success(data.message);
+                router.push("/signin");
+            } else {
+                toast.error(data.message);
+            }
+
+
+            form.reset()
+        } catch (error) {
+            console.error(error);
+            toast.error("Ошибка регистрации");
+        } finally {
+            setIsLoading(false);
+        }
     }
     return (
         <div className="h-full flex flex-col justify-center items-center">
@@ -71,18 +98,22 @@ const SignUp = () => {
                                 <FormItem>
                                     <FormLabel>Şifrə</FormLabel>
                                     <FormControl>
-                                        {/* <Input placeholder="Şifrə" {...field} /> */}
                                         <InputPassword {...field} placeholder="Şifrə" />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
                             )}
                         />
-                        <Button size="xl" type="submit" className="w-full text-lg">Daxil ol</Button>
+                        <Button size="xl" type="submit" className="w-full text-lg">
+                            {
+                                isLoading && <Loader className="animate-spin" />
+                            }
+                            Hesab yarat
+                        </Button>
                         <p className="text-center">
-                          Hesabın var?
+                            Hesabın var?
                             <Link href="/signin" className="text-amber-500 ml-1">
-                              Daxil ol
+                                Daxil ol
                             </Link>
                         </p>
                     </form>

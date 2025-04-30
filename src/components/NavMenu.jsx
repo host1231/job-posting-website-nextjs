@@ -18,8 +18,6 @@ const NavMenu = () => {
 
                 menuItems.map(menuItem => {
                     const isActive = pathname === menuItem.href;
-                    console.log(isActive)
-
                     return (<Link key={menuItem.id} href={menuItem.href} className={cn(isActive ? "text-amber-500" : "text-neutral-400", "link-primary")}>{menuItem.label}</Link>)
                 })
             }

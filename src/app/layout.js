@@ -1,7 +1,8 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
-import Header from "@/components/Header";
 import HeaderWrapper from "@/components/HeaderWrapper";
+import { Toaster } from "@/components/ui/sonner";
+import AuthProvider from "@/components/AuthProvider";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -16,12 +17,15 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body
-        className={`${inter.variable} antialiased`}
-      >
-        <HeaderWrapper />
-        {children}
-      </body>
+      <AuthProvider>
+        <body
+          className={`${inter.variable} antialiased`}
+        >
+          <HeaderWrapper />
+          <main>{children}</main>
+          <Toaster />
+        </body>
+      </AuthProvider>
     </html>
   );
 }

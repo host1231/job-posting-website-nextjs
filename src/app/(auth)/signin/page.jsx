@@ -13,21 +13,49 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod"
 import Link from "next/link";
 import InputPassword from "@/components/InputPassword";
-import { authFormSchema } from "@/lib/helper";
+import { signinSchema } from "@/lib/helper";
+import { useState } from "react";
+import {signIn} from "next-auth/react"
+import { toast } from "sonner";
+import { Loader } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 
 const SignIn = () => {
+    const [isLoading, setIsLoading] = useState(false);
+    const router = useRouter();
+
     const form = useForm({
-        resolver: zodResolver(authFormSchema),
+        resolver: zodResolver(signinSchema),
         defaultValues: {
             email: "",
             password: ""
         }
     })
 
-    function onSubmit(values) {
-        console.log(values)
-        form.reset()
+    async function onSubmit(values) {
+        try {
+            setIsLoading(true);
+            const res = await signIn("credentials", {
+                email: values.email,
+                password: values.password,
+                redirect: false
+            });
+            
+            if (res?.error) {
+                toast.error(res.error);
+            } else {
+                toast.success("Успешный вход");
+                // router.push("/");
+                window.location.href = "/";
+            }
+
+        } catch (error) {
+            console.error(error);
+            toast.error("Ошибка авторизации");
+        } finally {
+            setIsLoading(false);
+        }
     }
     return (
         <div className="h-full flex flex-col justify-center items-center">
@@ -55,13 +83,18 @@ const SignIn = () => {
                                 <FormItem>
                                     <FormLabel>Şifrə</FormLabel>
                                     <FormControl>
-                                        <InputPassword placeholder="Şifrə" {...field} />
+                                        <InputPassword {...field} placeholder="Şifrə" />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
                             )}
                         />
-                        <Button size="xl" type="submit" className="w-full text-lg">Daxil ol</Button>
+                        <Button size="xl" type="submit" className="w-full text-lg">
+                            {
+                                isLoading && <Loader className="animate-spin" />
+                            }
+                            Hesab yarat
+                        </Button>
                         <p className="text-center">
                             Hesabın yoxdursa,
                             <Link href="/signup" className="text-amber-500 ml-1">
