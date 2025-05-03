@@ -13,7 +13,7 @@ const InputPassword = ({placeholder, ...field}) => {
     return (
         <div className='w-full relative'>
             <Input {...field} placeholder={placeholder}  type={isOpen ? "text" : "password"} />
-            <button onClick={toggleVisibility} className="absolute top-3 right-3 cursor-pointer text-neutral-400 transition-all duration-300 hover:text-amber-500">
+            <button type="button" onClick={toggleVisibility} className="absolute top-3 right-3 cursor-pointer text-neutral-400 transition-all duration-300 hover:text-amber-500">
                 {
                     isOpen ? 
                     (

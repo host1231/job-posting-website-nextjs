@@ -19,7 +19,6 @@ import { useRouter } from "next/navigation";
 import { Loader } from "lucide-react";
 import { useState } from "react";
 
-
 const SignUp = () => {
     const [isLoading, setIsLoading] = useState(false);
     const router = useRouter();
@@ -36,7 +35,7 @@ const SignUp = () => {
     async function onSubmit(values) {
         try {
             setIsLoading(true);
-            const res = await fetch("/api/register", {
+            const res = await fetch("/api/auth/register", {
                 method: "POST",
                 body: JSON.stringify(values),
                 headers: { "Content-Type": "application/json" }
