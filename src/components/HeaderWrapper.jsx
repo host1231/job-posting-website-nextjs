@@ -7,7 +7,7 @@ const HeaderWrapper = () => {
     const pathname = usePathname();
     const hideHeaderRoutes = ["/signin", "/signup"];
     if (hideHeaderRoutes.includes(pathname)) return null;
-    else return <Header />
+    else return <div className="pt-[88px]"><Header /></div>
 }
 
 export default HeaderWrapper

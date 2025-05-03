@@ -20,10 +20,10 @@ import NavMenu from "./NavMenu";
 import { signOut, useSession } from "next-auth/react";
 
 const Header = () => {
-    const {data} = useSession();
+    const { data } = useSession();
     console.log(data)
     return (
-        <header className="header shadow-md py-6">
+        <header className="header  shadow-md py-6 fixed top-0 right-0 w-full bg-white z-40">
             <div className="container">
                 <div className="header__inner flex justify-between items-center">
                     <div className="logo">
@@ -31,31 +31,40 @@ const Header = () => {
                     </div>
                     <NavMenu />
                     <div className="btns">
-                        {/* <Button variant={"outline"} size={"lg"}>
-              <User />
-              Giriş
-            </Button> */}
-                        <DropdownMenu>
-                            <DropdownMenuTrigger asChild>
-                                <Avatar className="w-10 h-10 cursor-pointer">
-                                    <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
-                                    {/* <AvatarFallback>{data?.user?.name}</AvatarFallback> */}
-                                </Avatar>
-                            </DropdownMenuTrigger>
-                            <DropdownMenuContent className="mt-5 mr-15">
-                                <DropdownMenuLabel>Salam, {data?.user?.name}</DropdownMenuLabel>
-                                <DropdownMenuSeparator />
-                                <DropdownMenuItem>Vakansiyalarım</DropdownMenuItem>
-                                <DropdownMenuItem asChild variant="">
-                                    <Link href="/my-company">Şirkətim</Link>
-                                </DropdownMenuItem>
-                                <DropdownMenuSeparator />
-                                <DropdownMenuItem variant="destructive" onClick={() => signOut({callbackUrl: "/"})}>
-                                    <LogOut />
-                                    Logout
-                                </DropdownMenuItem>
-                            </DropdownMenuContent>
-                        </DropdownMenu>
+                        {
+                            data?.user ? (
+                                <DropdownMenu>
+                                    <DropdownMenuTrigger asChild>
+                                        <Avatar className="w-10 h-10 cursor-pointer">
+                                            <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
+                                            {/* <AvatarFallback>{data?.user?.name}</AvatarFallback> */}
+                                        </Avatar>
+                                    </DropdownMenuTrigger>
+                                    <DropdownMenuContent className="mt-5 mr-15">
+                                        <DropdownMenuLabel>Salam, {data?.user?.name}</DropdownMenuLabel>
+                                        <DropdownMenuSeparator />
+                                        <DropdownMenuItem>Vakansiyalarım</DropdownMenuItem>
+                                        <DropdownMenuItem asChild variant="">
+                                            <Link href="/my-company">Şirkətim</Link>
+                                        </DropdownMenuItem>
+                                        <DropdownMenuSeparator />
+                                        <DropdownMenuItem variant="destructive" onClick={() => signOut({ callbackUrl: "/" })}>
+                                            <LogOut />
+                                            Logout
+                                        </DropdownMenuItem>
+                                    </DropdownMenuContent>
+                                </DropdownMenu>
+                            ) :
+                                (
+                                    <Link variant={"outline"} href="/signin">
+                                        <Button variant={"outline"} size={"lg"}>
+                                            <User />
+                                            Giriş
+                                        </Button>
+                                    </Link>
+                                )
+                        }
+
                     </div>
                 </div>
             </div>

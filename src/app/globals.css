@@ -56,7 +56,7 @@
   --secondary-foreground: oklch(0.205 0 0);
   --muted: oklch(0.97 0 0);
   --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
+  --accent: oklch(0.90 0 0);
   --accent-foreground: oklch(0.205 0 0);
   --destructive: oklch(0.577 0.245 27.325);
   --border: oklch(0.922 0 0);
@@ -116,7 +116,8 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground font-inter;
+    /* @apply bg-background text-foreground font-inter; */
+    @apply bg-neutral-50/80 text-foreground font-inter;
   }
 
 }
@@ -127,4 +128,8 @@
 
 .link-primary {
   @apply font-medium hover:text-amber-500 transition-all duration-300;
+}
+
+.default-card {
+  @apply hover:border-border hover:text-card-foreground hover:scale-100 hover:rotate-0;
 }

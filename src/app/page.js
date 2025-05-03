@@ -1,3 +1,5 @@
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import {
   Select,
@@ -6,6 +8,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import VacancyItem from "@/components/VacancyItem";
+import VacancyItemSkeleton from "@/components/VacancyItemSkeleton";
+import { Clock, Eye } from "lucide-react";
 
 // types: ["Tam ştat", "Yarım-ştat", "Frilans", "Təcrübəçi", "Uzaqdan", "Müvəqqəti iş"]
 // education: ["Ali", "Natamam ali", "Orta"],
@@ -47,59 +52,20 @@ const data = [
 
 export default function Home() {
   return (
-    <div className="bg-neutral-50 py-20">
+    <div className="my-10">
       <div className="container">
-        {/* <div className="text-center">
-          <h1 className="text-5xl font-bold mb-8">Gələcəyinin başladığı yer</h1>
-          <p className="text-neutral-500 font-medium mb-10">Son 30 gündə Glorri ilə 368 namizəd xəyalındakı işə qovuşdu. Sırada sən varsan!</p>
-        </div> */}
-        <div className="bg-white shadow-md px-10 py-6">
-          <div className="flex gap-5 mb-5">
-            <Input placeholder="Vakansiya adı və ya açar söz" />
-            <Select>
-              <SelectTrigger className="w-sm">
-                <SelectValue placeholder="Theme" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="light">Light</SelectItem>
-                <SelectItem value="dark">Dark</SelectItem>
-                <SelectItem value="system">System</SelectItem>
-              </SelectContent>
-            </Select>
+        <div className="py-10 px-5 shadow-md my-5">
+          <Input />
+        </div>
+        <div className="grid grid-cols-3 lg:grid-cols-4 gap-6">
+          <VacancyItemSkeleton />
+          {
+            [...Array(10)].map((el, index) => (
+              <VacancyItem key={index} />
+            ))
+          }
+          
 
-          </div>
-          <div className="flex gap-5">
-            <Select>
-              <SelectTrigger className="w-[150px]">
-                <SelectValue placeholder="Theme" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="light">Light</SelectItem>
-                <SelectItem value="dark">Dark</SelectItem>
-                <SelectItem value="system">System</SelectItem>
-              </SelectContent>
-            </Select>
-            <Select>
-              <SelectTrigger className="w-[150px]">
-                <SelectValue placeholder="Theme" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="light">Light</SelectItem>
-                <SelectItem value="dark">Dark</SelectItem>
-                <SelectItem value="system">System</SelectItem>
-              </SelectContent>
-            </Select>
-            <Select>
-              <SelectTrigger className="w-[150px]">
-                <SelectValue placeholder="Theme" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="light">Light</SelectItem>
-                <SelectItem value="dark">Dark</SelectItem>
-                <SelectItem value="system">System</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
         </div>
       </div>
     </div>
