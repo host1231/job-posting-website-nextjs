@@ -8,9 +8,8 @@ const CategoryItem = ({title, logo, onClick}) => {
     return (
         <Card className="relative">
             <CardHeader>
-                <Avatar className="w-15 h-15 p-3 border mb-3">
+                <Avatar className="w-15 h-15 rounded-full mb-3">
                     <AvatarImage src={logo ? logo : "/vector.svg"} alt="@shadcn" />
-                    <AvatarFallback>CN</AvatarFallback>
                 </Avatar>
                 <CardTitle className="line-clamp-2">{title}</CardTitle>
                 <Button variant="ghost" onClick={onClick} className="absolute top-4 right-4 text-red-500 hover:bg-red-200 hover:text-red-500">

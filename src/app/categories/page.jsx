@@ -179,7 +179,7 @@ const Categories = () => {
           </Dialog>
           {
             isLoading ?
-              [...Array(12)].map((el, index) => <CategoryItemSkeleton key={index} />) :
+              [...Array(8)].map((el, index) => <CategoryItemSkeleton key={index} />) :
               categories?.map(category => (
                 <CategoryItem key={category._id} title={category.title} logo={category.imageUrl} onClick={() => deleteCategory(category._id)} />
               ))

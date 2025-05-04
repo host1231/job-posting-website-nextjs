@@ -54,13 +54,13 @@ export default function Home() {
   return (
     <div className="my-10">
       <div className="container">
-        <div className="py-10 px-5 shadow-md my-5">
-          <Input />
+        <div className="py-10 px-5 shadow-md my-6 rounded-md bg-white">
+          <Input placeholder="Vakansiya adı və ya açar söz" />
         </div>
         <div className="grid grid-cols-3 lg:grid-cols-4 gap-6">
-          <VacancyItemSkeleton />
+          {/* <VacancyItemSkeleton /> */}
           {
-            [...Array(10)].map((el, index) => (
+            [...Array(8)].map((el, index) => (
               <VacancyItem key={index} />
             ))
           }
