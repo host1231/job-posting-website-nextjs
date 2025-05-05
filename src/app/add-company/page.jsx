@@ -12,7 +12,7 @@ import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 
-const MyCompany = () => {
+const AddCompany = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const form = useForm({
@@ -183,4 +183,4 @@ const MyCompany = () => {
   )
 }
 
-export default MyCompany
+export default AddCompany

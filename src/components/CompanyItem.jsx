@@ -6,7 +6,7 @@ import Link from 'next/link'
 const CompanyItem = ({ logo, title, description }) => {
     return (
         <Link href={`/companies/${encodeURIComponent(title)}`}>
-            <Card>
+            <Card className="w-full h-full">
                 <CardHeader>
                     <Avatar className="w-20 h-20 rounded-full border mb-3">
                         <AvatarImage src={logo ? logo : "/vector.svg"} alt="@shadcn" />

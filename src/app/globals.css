@@ -123,7 +123,7 @@
 }
 
 .container {
-  @apply max-w-7xl mx-auto px-10;
+  @apply max-w-7xl mx-auto px-3;
 }
 
 .link-primary {

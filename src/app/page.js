@@ -1,16 +1,11 @@
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+"use client"
 import { Input } from "@/components/ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
 import VacancyItem from "@/components/VacancyItem";
 import VacancyItemSkeleton from "@/components/VacancyItemSkeleton";
-import { Clock, Eye } from "lucide-react";
+import { formatDistance, formatDistanceToNow } from "date-fns";
+import {az} from "date-fns/locale"
+import { useEffect, useState } from "react";
+import { toast } from "sonner";
 
 // types: ["Tam ştat", "Yarım-ştat", "Frilans", "Təcrübəçi", "Uzaqdan", "Müvəqqəti iş"]
 // education: ["Ali", "Natamam ali", "Orta"],
@@ -51,21 +46,52 @@ const data = [
 
 
 export default function Home() {
+  const [vacancies, setVacancies] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const getformattedDateAz = (currentDate) => {
+    const date = new Date(currentDate);
+    return formatDistanceToNow(date, {
+      addSuffix: true,
+      locale: az
+    })
+  }
+
+  useEffect(() => {
+    const getVacancies = async () => {
+      try {
+        setIsLoading(true);
+        const res = await fetch("/api/vacancy");
+        const data = await res.json();
+
+        if (res.ok) {
+          setVacancies(data);
+        } else {
+          toast.error("Ошибка получение вакансии");
+        }
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+
+    getVacancies();
+  }, []);
   return (
     <div className="my-10">
       <div className="container">
         <div className="py-10 px-5 shadow-md my-6 rounded-md bg-white">
           <Input placeholder="Vakansiya adı və ya açar söz" />
         </div>
-        <div className="grid grid-cols-3 lg:grid-cols-4 gap-6">
-          {/* <VacancyItemSkeleton /> */}
+        <h3 className="text-2xl font-semibold mb-6">Vakansiyalar</h3>
+        <div className="grid md:grid-cols-3 lg:grid-cols-4 gap-6">
+          {isLoading && [...Array(8)].map((el, index) => <VacancyItemSkeleton key={index} />)}
           {
-            [...Array(8)].map((el, index) => (
-              <VacancyItem key={index} />
+            vacancies?.map(vacancy => (
+              <VacancyItem key={vacancy._id} id={vacancy._id} views={vacancy.views} title={vacancy.title} companyTitle={vacancy.company.title} companyImageUrl={vacancy.company.imageUrl} createdAt={getformattedDateAz(vacancy.createdAt)} />
             ))
           }
-          
-
         </div>
       </div>
     </div>

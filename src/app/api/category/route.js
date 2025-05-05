@@ -1,3 +1,4 @@
+import connectDB from "@/config/connectDB";
 import Category from "@/models/Category";
 import { put } from "@vercel/blob";
 import { NextResponse } from "next/server";
@@ -14,6 +15,7 @@ export async function POST(request) {
     }
     
     try {
+        await connectDB();
         const existingTitle = await Category.findOne({title});
         if (existingTitle) {
             return NextResponse.json({ message: "Название должно быть уникальными!" }, { status: 400 });
@@ -40,6 +42,7 @@ export async function POST(request) {
 
 export async function GET() {
     try {
+        await connectDB();
         const categories = await Category.find();
 
         return NextResponse.json(categories, { status: 200 });

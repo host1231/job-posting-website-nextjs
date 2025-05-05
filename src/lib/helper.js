@@ -1,5 +1,37 @@
 import { z } from "zod";
 
+export const vacancySchema = z.object({
+  title: z.string()
+    .min(1, "Название компании обязательно")
+    .max(100, "Название слишком длинное"),
+  categories: z.array(z.string()).min(1, {
+    message: "Выберите хотя бы одну категорию",
+  }),
+  company: z.string().min(1, {
+    message: "Выберите компанию"
+  }),
+  salary: z.string().optional(),
+  type: z.string().min(1, {
+    message: "Выберите тип вакансии"
+  }),
+  education: z.string().min(1, {
+    message: "Выберите образование"
+  }),
+  experience: z.string().min(1, {
+    message: "Выберите опыт работы"
+  }),
+  description: z
+    .string()
+    .min(10, "Описание слишком короткое")
+    .max(1000, "Описание слишком длинное"),
+  requirements: z
+    .string()
+    .min(10, "Описание слишком короткое")
+    .max(1000, "Описание слишком длинное"),
+  email: z.string()
+    .email({ message: "Неверный формат почты" }),
+})
+
 
 export const companySchema = z.object({
   title: z

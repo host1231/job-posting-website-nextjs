@@ -1,6 +1,6 @@
 "use client"
 import { Button } from "@/components/ui/button";
-import { Building, LogOut, User } from "lucide-react";
+import { BookText, Building, LogOut, User } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -30,7 +30,13 @@ const Header = () => {
                         <Image src="next.svg" alt="Logo" width={120} height={40} />
                     </div>
                     <NavMenu />
-                    <div className="btns">
+                    <div className="btns flex items-center gap-5">
+                        <Link href="/add-vacancy">
+                        <Button>
+                            <BookText />
+                            Добавить вакансию
+                        </Button>
+                        </Link>
                         {
                             data?.user ? (
                                 <DropdownMenu>
@@ -45,7 +51,7 @@ const Header = () => {
                                         <DropdownMenuSeparator />
                                         <DropdownMenuItem>Vakansiyalarım</DropdownMenuItem>
                                         <DropdownMenuItem asChild variant="">
-                                            <Link href="/my-company">Şirkətim</Link>
+                                            <Link href="/add-company">Şirkətim</Link>
                                         </DropdownMenuItem>
                                         <DropdownMenuSeparator />
                                         <DropdownMenuItem variant="destructive" onClick={() => signOut({ callbackUrl: "/" })}>

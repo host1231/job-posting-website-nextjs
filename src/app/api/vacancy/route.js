@@ -1,0 +1,50 @@
+import connectDB from "@/config/connectDB";
+import Vacancy from "@/models/Vacancy";
+import { NextResponse } from "next/server";
+
+export async function GET() {
+    try {
+        await connectDB();
+
+        const vacancies = await Vacancy.find()
+            .populate("company")
+            .populate("categories");
+
+        return NextResponse.json(vacancies, { status: 200 });
+    } catch (error) {
+        console.log(error);
+        return NextResponse.json({ error: "Ошибка получение вакансии" }, { status: 500 });
+    }
+}
+
+export async function POST(request) {
+    const { title, company, categories, salary, type, experience, education, description, requirements, email } = await request.json();
+
+    if (!title || !company || !categories || !salary || !type || !experience || !education || !description || !requirements || !email) {
+        return NextResponse.json({ msg: "Все данные обязательны!" }, { status: 400 });
+    }
+
+    try {
+        await connectDB();
+
+        // 👉 Создаём вакансию
+        await Vacancy.create({
+            title,
+            company,
+            categories,
+            salary,
+            type,
+            experience,
+            education,
+            description,
+            requirements,
+            email
+        });
+
+        return NextResponse.json({msg: "Вакансия успешно добавлено"}, { status: 201 });
+    } catch (error) {
+        console.log(error);
+        return NextResponse.json({ error: "Ошибка добавления вакансии" }, { status: 500 });
+    }
+
+}
