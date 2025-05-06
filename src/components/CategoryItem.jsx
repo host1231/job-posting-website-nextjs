@@ -5,10 +5,10 @@ import { Button } from './ui/button'
 import { ArrowRight, Trash } from 'lucide-react'
 import Link from 'next/link'
 
-const CategoryItem = ({title, logo, onClick}) => {
+const CategoryItem = ({title, slug, logo, onClick}) => {
     return (
-        <Link href={`/?category=${title}`}>
-            <Card className="relative w-full h-full">
+        <Link href={`/?category=${slug}`}>
+            <Card className="relative w-full h-full justify-between">
                 <CardHeader>
                     <Avatar className="w-15 h-15 rounded-md  mb-3">
                         <AvatarImage className="bg-cover" src={logo ? logo : "/vector.svg"} alt="@shadcn" />

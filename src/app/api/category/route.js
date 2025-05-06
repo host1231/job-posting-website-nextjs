@@ -1,4 +1,5 @@
 import connectDB from "@/config/connectDB";
+import { toSlug } from "@/lib/slug";
 import Category from "@/models/Category";
 import { put } from "@vercel/blob";
 import { NextResponse } from "next/server";
@@ -29,6 +30,7 @@ export async function POST(request) {
 
         await Category.create({
             title,
+            slug: toSlug(title),
             imageUrl: blob.url
         });
 

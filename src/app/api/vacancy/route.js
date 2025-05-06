@@ -1,4 +1,7 @@
 import connectDB from "@/config/connectDB";
+import { toSlug } from "@/lib/slug";
+import Category from "@/models/Category";
+import Company from "@/models/Company";
 import Vacancy from "@/models/Vacancy";
 import { NextResponse } from "next/server";
 
@@ -20,19 +23,21 @@ export async function GET() {
 export async function POST(request) {
     const { title, company, categories, salary, type, experience, education, description, requirements, email } = await request.json();
 
-    if (!title || !company || !categories || !salary || !type || !experience || !education || !description || !requirements || !email) {
+    if (!title || !company || !categories || !type || !experience || !education || !description || !requirements || !email) {
         return NextResponse.json({ msg: "Все данные обязательны!" }, { status: 400 });
     }
 
     try {
         await connectDB();
 
-        // 👉 Создаём вакансию
+        const count = await Vacancy.countDocuments(); 
+
         await Vacancy.create({
             title,
+            slug: `${toSlug(title)}-${count}`,
             company,
             categories,
-            salary,
+            salary: salary ? salary : "",
             type,
             experience,
             education,

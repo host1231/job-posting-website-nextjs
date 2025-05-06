@@ -7,6 +7,10 @@ const categorySchema = new mongoose.Schema(
             required: true,
             unique: true
         },
+        slug: {
+            type: String,
+            required: true
+        },
         imageUrl: {
             type: String,
             required: true
@@ -17,4 +21,4 @@ const categorySchema = new mongoose.Schema(
     }
 );
 
-export default mongoose.models.Category || mongoose.model("Category", categorySchema);
+export default mongoose.models.Category2 || mongoose.model("Category2", categorySchema);

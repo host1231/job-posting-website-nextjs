@@ -87,7 +87,7 @@ const AddCompany = () => {
                     </FormItem>
                   )}
                 />
-                <div className="flex gap-5">
+                <div className="flex items-start gap-5">
                   <FormField
                     control={form.control}
                     name="city"

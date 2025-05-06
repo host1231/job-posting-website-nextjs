@@ -53,8 +53,9 @@ const Categories = () => {
     }
   }
 
-  const deleteCategory = async (id) => {
+  const deleteCategory = async (e, id) => {
     try { 
+      e.preventDefault();
       setIsLoading(true);
       const res = await fetch(`/api/category/${id}`, {
         method: "DELETE"
@@ -181,7 +182,7 @@ const Categories = () => {
             isLoading ?
               [...Array(8)].map((el, index) => <CategoryItemSkeleton key={index} />) :
               categories?.map(category => (
-                <CategoryItem key={category._id} title={category.title} logo={category.imageUrl} onClick={() => deleteCategory(category._id)} />
+                <CategoryItem key={category._id} title={category.title} slug={category.slug} logo={category.imageUrl} onClick={(e) => deleteCategory(e, category._id)} />
               ))
           }
 

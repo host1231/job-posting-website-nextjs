@@ -16,3 +16,16 @@ export async function GET(request, {params}) {
         return NextResponse.json({ message: "Ошибка получение компании" }, { status: 500 });
     }
 }
+
+export async function DELETE (request, {params}) {
+    const {title} = params;
+    try {
+        await connectDB();
+
+        await Company.findOneAndDelete({title});
+        return NextResponse.json({msg: "Компания успешна удалена!"}, {status: 200});
+    } catch (error) {
+        console.log(error);
+        return NextResponse.json({msg: "Ошибка удаление компании"}, {status: 500});
+    }
+}

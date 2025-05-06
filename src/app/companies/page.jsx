@@ -4,26 +4,53 @@ import CategoryItemSkeleton from '@/components/CategoryItemSkeleton';
 import CompanyItem from '@/components/CompanyItem';
 import CompanyItemSkeleton from '@/components/CompanyItemSkeleton';
 import React, { useEffect, useState } from 'react'
+import { toast } from 'sonner';
 
 const Companies = () => {
   const [companies, setCompanies] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(() => {
-    const getCompanies = async () => {
-      try {
-        setIsLoading(true);
-        const res = await fetch("/api/company");
-        const data = await res.json();
+  const getCompanies = async () => {
+    try {
+      setIsLoading(true);
+      const res = await fetch("/api/company");
+      const data = await res.json();
 
-        setCompanies(data);
-      } catch (error) {
-        console.error(error);
-      } finally {
-        setIsLoading(false);
-      }
+      setCompanies(data);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsLoading(false);
     }
+  }
 
+  const deleteCompany = async (e, title) => {
+    try {
+      e.preventDefault();
+      setIsLoading(true);
+      const res = await fetch(`/api/company/${title}`, {
+        method: "DELETE"
+      });
+      const data = await res.json();
+
+      getCompanies();
+
+      if (res.ok) {
+        toast.success(data.msg);
+      } else {
+        toast.error(data.msg);
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error("Ошибка удаление компании");
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
+
+
+  useEffect(() => {
     getCompanies();
   }, []);
   return (
@@ -38,7 +65,7 @@ const Companies = () => {
           {isLoading && [...Array(8)].map((el, index) => <CompanyItemSkeleton key={index} />)}
           {
             companies?.map(company => (
-              <CompanyItem key={company._id} logo={company.imageUrl} title={company.title} description={company.description} />
+              <CompanyItem key={company._id} logo={company.imageUrl} title={company.title} description={company.description} onClick={(e) => deleteCompany(e, company.title)} />
             ))
           }
         </div>

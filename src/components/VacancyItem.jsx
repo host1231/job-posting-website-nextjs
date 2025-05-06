@@ -1,23 +1,25 @@
 import React from 'react'
 import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from './ui/card'
 import { Avatar, AvatarImage } from './ui/avatar'
-import { Clock, Eye } from 'lucide-react'
+import { Clock, Eye, Trash } from 'lucide-react'
 import Link from 'next/link'
+import { toSlug } from '@/lib/slug'
+import { Button } from './ui/button'
 
-const VacancyItem = ({id, title, companyTitle, companyImageUrl, views, createdAt}) => {
+const VacancyItem = ({id, title, companyTitle, companyImageUrl, views, createdAt, slug, onClick}) => {
     return (
-        <Link href={`/${id}`}>
-            <Card className="w-full h-full gap-2 md:gap-6">
+        <Link href={`/${slug}`}>
+            <Card className="w-full h-full gap-2 md:gap-6 justify-between relative">
                 <CardHeader className="flex items-center gap-4 md:block">
                     <Avatar className="w-10 h-10 md:w-15 md:h-15 mb-3">
                         <AvatarImage src={companyImageUrl} alt="@shadcn" />
                     </Avatar>
                     <div>
-                        <CardTitle className="line-clamp-2">{title}</CardTitle>
+                        <CardTitle className="line-clamp-2 mb-1">{title}</CardTitle>
                         <CardDescription className="line-clamp-1">{companyTitle}</CardDescription>
                     </div>
                 </CardHeader>
-                <CardFooter className="flex justify-between items-center text-neutral-400 text-sm">
+                <CardFooter className="flex justify-between items-center text-muted-foreground text-sm">
                     <span className="flex items-center gap-1">
                         <Clock size={15} />
                         {createdAt}
@@ -27,6 +29,9 @@ const VacancyItem = ({id, title, companyTitle, companyImageUrl, views, createdAt
                         {views}
                     </span>
                 </CardFooter>
+                <Button variant="ghost" onClick={onClick} className="absolute top-4 right-4 text-red-500 hover:bg-red-200 hover:text-red-500">
+                    <Trash />
+                </Button>
             </Card>
         </Link>
     )

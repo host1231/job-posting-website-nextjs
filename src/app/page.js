@@ -2,8 +2,9 @@
 import { Input } from "@/components/ui/input";
 import VacancyItem from "@/components/VacancyItem";
 import VacancyItemSkeleton from "@/components/VacancyItemSkeleton";
+import { getFormattedDate } from "@/lib/formattedDate";
 import { formatDistance, formatDistanceToNow } from "date-fns";
-import {az} from "date-fns/locale"
+
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
@@ -49,35 +50,53 @@ export default function Home() {
   const [vacancies, setVacancies] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  const getformattedDateAz = (currentDate) => {
-    const date = new Date(currentDate);
-    return formatDistanceToNow(date, {
-      addSuffix: true,
-      locale: az
-    })
+
+  const getVacancies = async () => {
+    try {
+      setIsLoading(true);
+      const res = await fetch("/api/vacancy");
+      const data = await res.json();
+
+      if (res.ok) {
+        setVacancies(data);
+      } else {
+        toast.error("Ошибка получение вакансии");
+      }
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
+  const deleteVacancy = async (e, slug) => {
+    try {
+      e.preventDefault();
+      setIsLoading(true);
+      const res = await fetch(`/api/vacancy/${slug}`, {
+        method: "DELETE"
+      });
+      const data = await res.json();
+
+      getVacancies();
+
+      if (res.ok) {
+        toast.success(data.message);
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error("Ошибка удаление категория!");
+    } finally {
+      setIsLoading(false);
+    }
   }
 
   useEffect(() => {
-    const getVacancies = async () => {
-      try {
-        setIsLoading(true);
-        const res = await fetch("/api/vacancy");
-        const data = await res.json();
-
-        if (res.ok) {
-          setVacancies(data);
-        } else {
-          toast.error("Ошибка получение вакансии");
-        }
-      } catch (error) {
-        console.error(error);
-      } finally {
-        setIsLoading(false);
-      }
-    }
-
     getVacancies();
   }, []);
+
   return (
     <div className="my-10">
       <div className="container">
@@ -89,7 +108,7 @@ export default function Home() {
           {isLoading && [...Array(8)].map((el, index) => <VacancyItemSkeleton key={index} />)}
           {
             vacancies?.map(vacancy => (
-              <VacancyItem key={vacancy._id} id={vacancy._id} views={vacancy.views} title={vacancy.title} companyTitle={vacancy.company.title} companyImageUrl={vacancy.company.imageUrl} createdAt={getformattedDateAz(vacancy.createdAt)} />
+              <VacancyItem key={vacancy._id} id={vacancy._id} views={vacancy.views} title={vacancy.title} companyTitle={vacancy.company.title} companyImageUrl={vacancy.company.imageUrl} createdAt={getFormattedDate(vacancy.createdAt)} slug={vacancy.slug} onClick={(e) => deleteVacancy(e, vacancy.slug)} />
             ))
           }
         </div>

@@ -7,6 +7,10 @@ const vacancySchema = new mongoose.Schema(
             required: true,
             trim: true
         },
+        slug: {
+            type: String,
+            required: true
+        },
         company: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "Company",
@@ -21,7 +25,7 @@ const vacancySchema = new mongoose.Schema(
         ],
         salary: {
             type: String,
-            required: true
+            required: false
         },
         type: {
             type: String,
@@ -62,4 +66,4 @@ const vacancySchema = new mongoose.Schema(
     }
 );
 
-export default mongoose.models.Vacancy2 || mongoose.model("Vacancy2", vacancySchema);
+export default mongoose.models.Vacancy4 || mongoose.model("Vacancy4", vacancySchema);
