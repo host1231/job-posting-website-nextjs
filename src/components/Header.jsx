@@ -23,12 +23,12 @@ const Header = () => {
     const { data } = useSession();
     console.log(data)
     return (
-        <header className="header  shadow-md py-3 fixed top-0 right-0 w-full bg-white z-40">
+        <header className="header shadow-sm py-3 fixed top-0 right-0 w-full bg-white z-40">
             <div className="container">
                 <div className="header__inner flex justify-between items-center">
                     <div className="logo">
                         <Link href="/">
-                            <Image src="logo.svg" alt="Logo" width={200} height={60} />
+                            <Image src="/logo.svg" alt="Logo" width={200} height={60} />
                         </Link>
                     </div>
                     <NavMenu />

@@ -103,7 +103,7 @@ export default function Home() {
         <div className="py-10 px-5 shadow-md my-6 rounded-md bg-white">
           <Input placeholder="Vakansiya adı və ya açar söz" />
         </div>
-        <h3 className="text-2xl font-semibold mb-6">Vakansiyalar</h3>
+        <h2 className="title mb-3">Vakansiyalar</h2>
         <div className="grid md:grid-cols-3 lg:grid-cols-4 gap-6">
           {isLoading && [...Array(8)].map((el, index) => <VacancyItemSkeleton key={index} />)}
           {

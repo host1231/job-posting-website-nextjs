@@ -61,7 +61,7 @@ const Companies = () => {
             Şirkətlər
           </h2>
         </div>
-        <div className="grid grid-cols-4 gap-6">
+        <div className="grid md:grid-cols-3 lg:grid-cols-4 gap-6">
           {isLoading && [...Array(8)].map((el, index) => <CompanyItemSkeleton key={index} />)}
           {
             companies?.map(company => (

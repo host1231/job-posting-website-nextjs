@@ -1,10 +1,14 @@
-"use client"
+import MobileMenu from '@/components/MobileMenu'
 import React from 'react'
 
-const page = () => {
+const Test2 = () => {
   return (
-    <div>page</div>
+    <section className="py-10">
+      <div className="container">
+        <MobileMenu />
+      </div>
+    </section>
   )
 }
 
-export default page
+export default Test2

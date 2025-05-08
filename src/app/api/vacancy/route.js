@@ -1,7 +1,5 @@
 import connectDB from "@/config/connectDB";
 import { toSlug } from "@/lib/slug";
-import Category from "@/models/Category";
-import Company from "@/models/Company";
 import Vacancy from "@/models/Vacancy";
 import { NextResponse } from "next/server";
 

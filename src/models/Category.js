@@ -5,7 +5,8 @@ const categorySchema = new mongoose.Schema(
         title: {
             type: String,
             required: true,
-            unique: true
+            unique: true,
+            trim: true
         },
         slug: {
             type: String,
@@ -21,4 +22,4 @@ const categorySchema = new mongoose.Schema(
     }
 );
 
-export default mongoose.models.Category2 || mongoose.model("Category2", categorySchema);
+export default mongoose.models.Category || mongoose.model('Category', categorySchema);

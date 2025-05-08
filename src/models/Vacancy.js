@@ -66,4 +66,4 @@ const vacancySchema = new mongoose.Schema(
     }
 );
 
-export default mongoose.models.Vacancy4 || mongoose.model("Vacancy4", vacancySchema);
+export default mongoose.models.Vacancy || mongoose.model("Vacancy", vacancySchema);

@@ -46,6 +46,7 @@ const Categories = () => {
       const res = await fetch("/api/category");
       const data = await res.json();
       setCategories(data);
+      console.log(data)
     } catch (error) {
       console.error(error);
     } finally {
@@ -122,15 +123,15 @@ const Categories = () => {
     <section className="py-10">
       <div className="container">
         <div className="flex justify-between items-end mb-6 ">
-          <h2 className="text-4xl font-semibold">
-            <span className="text-amber-500">Kateqoriyaları</span> kəşf et
+          <h2 className="title">
+            <span className="text-primary">Kateqoriyaları</span> kəşf et
           </h2>
-          <Link href="/" className="flex items-center gap-2 text-amber-500">
+          <Link href="/" className="hidden md:flex items-center gap-2 text-primary">
             <span>Bütün vakansiyalar</span>
             <ArrowRight size={18} />
           </Link>
         </div>
-        <div className="grid grid-cols-4 gap-6">
+        <div className="grid md:grid-cols-3 lg:grid-cols-4 gap-6">
           <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger >
               <Card className="w-full h-[207.6px] cursor-pointer">
@@ -182,7 +183,7 @@ const Categories = () => {
             isLoading ?
               [...Array(8)].map((el, index) => <CategoryItemSkeleton key={index} />) :
               categories?.map(category => (
-                <CategoryItem key={category._id} title={category.title} slug={category.slug} logo={category.imageUrl} onClick={(e) => deleteCategory(e, category._id)} />
+                <CategoryItem key={category._id} title={category.title} slug={category.slug} logo={category.imageUrl} vacanciesCount={category.vacanciesCount} onClick={(e) => deleteCategory(e, category._id)} />
               ))
           }
 

@@ -9,6 +9,26 @@ export async function GET(request) {
 
         const companies = await Company.find();
 
+        
+        // const companiesWithVacanciesCount = await Company.aggregate([
+        //     {
+        //         $lookup: {
+        //             from: 'vacancy', // имя коллекции вакансий
+        //             localField: '_id',  // поле в коллекции companies
+        //             foreignField: 'company',  // поле в коллекции vacancies, которое ссылается на companyId
+        //             as: 'vacancies'
+        //         }
+        //     },
+        //     {
+        //         $project: {
+        //             name: 1,  // отображаем имя компании
+        //             vacanciesCount: { $size: '$vacancy' }  // подсчитываем количество вакансий
+        //         }
+        //     }
+        // ]);
+
+        // console.log(companiesWithVacanciesCount)
+
         return NextResponse.json(companies, { status: 200 });
     } catch (error) {
         console.log(error);
@@ -44,6 +64,8 @@ export async function POST(request) {
             access: "public",
             addRandomSuffix: true
         });
+
+
 
         await Company.create({
             title,

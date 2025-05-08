@@ -6,18 +6,18 @@ import { NextResponse } from "next/server";
 
 export async function POST(request) {
     const data = await request.formData();
-    
+
     const title = data.get("Title");
     const logo = data.get("Logo");
 
 
-    if (!title ||  logo.size === 0) {
+    if (!title || logo.size === 0) {
         return NextResponse.json({ message: "Все данные обязательны!" }, { status: 400 });
     }
-    
+
     try {
         await connectDB();
-        const existingTitle = await Category.findOne({title});
+        const existingTitle = await Category.findOne({ title });
         if (existingTitle) {
             return NextResponse.json({ message: "Название должно быть уникальными!" }, { status: 400 });
         }
@@ -44,10 +44,40 @@ export async function POST(request) {
 
 export async function GET() {
     try {
-        await connectDB();
-        const categories = await Category.find();
+        await connectDB();  // Подключаемся к базе данных
 
-        return NextResponse.json(categories, { status: 200 });
+        // Агрегируем данные, чтобы получить количество вакансий для каждой категории
+        const categoriesWithVacancies = await Category.aggregate([
+            {
+                $lookup: {
+                    from: "vacancies",  // имя коллекции вакансий
+                    localField: "_id",   // поле из коллекции Category
+                    foreignField: "categories",  // поле из коллекции Vacancy
+                    as: "vacancies"  // Создадим массив с вакансиями для каждой категории
+                }
+            },
+            {
+                $addFields: {
+                    vacanciesCount: { $size: "$vacancies" }  // Подсчитываем количество вакансий в каждой категории
+                }
+            },
+            {
+                $project: {
+                    // Возвращаем все поля категории
+                    title: 1,  // Название категории (если нужно явно указать)
+                    slug: 1,   // Слаг категории
+                    imageUrl: 1,  // Ссылка на изображение категории
+                    vacanciesCount: 1,  // Количество вакансий
+                    createdAt: 1,  // Дата создания категории
+                    updatedAt: 1   // Дата последнего обновления категории
+                    // Убираем _id, если оно не нужно:
+                    // _id: 0  
+                }
+            }
+        ]);
+
+        // Возвращаем результат с количеством вакансий для каждой категории
+        return NextResponse.json(categoriesWithVacancies, { status: 200 });
     } catch (error) {
         console.log(error);
         return NextResponse.json({ message: "Ошибка получение категорий" }, { status: 500 });

@@ -5,12 +5,12 @@ import { Button } from './ui/button'
 import { ArrowRight, Trash } from 'lucide-react'
 import Link from 'next/link'
 
-const CategoryItem = ({title, slug, logo, onClick}) => {
+const CategoryItem = ({title, slug, logo, onClick, vacanciesCount}) => {
     return (
         <Link href={`/?category=${slug}`}>
-            <Card className="relative w-full h-full justify-between">
+            <Card className="relative w-full h-full justify-between gap-2 md:gap-6">
                 <CardHeader>
-                    <Avatar className="w-15 h-15 rounded-md  mb-3">
+                    <Avatar className="w-10 h-10 md:w-15 md:h-15 mb-3 rounded-md">
                         <AvatarImage className="bg-cover" src={logo ? logo : "/vector.svg"} alt="@shadcn" />
                     </Avatar>
                     <CardTitle className="line-clamp-2">{title}</CardTitle>
@@ -19,7 +19,7 @@ const CategoryItem = ({title, slug, logo, onClick}) => {
                     </Button>
                 </CardHeader>
                 <CardFooter className="flex justify-between items-center ">
-                    <span className="text-neutral-400">86 vakansiya</span>
+                    <span className="text-muted-foreground">{vacanciesCount} vakansiya</span>
                     <ArrowRight className="" />
                 </CardFooter>
             </Card>

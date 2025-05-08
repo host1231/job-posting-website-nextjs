@@ -40,11 +40,11 @@ const CompanyAbout = () => {
     return (
         <section className="my-10">
             <div className="container">
-                <div className="p-6 shadow-md bg-white rounded-md">
-                    <div className="flex flex-col md:flex-row md:items-center gap-6 relative w-full">
+                <div className="border p-6 shadow-md bg-white rounded-md">
+                    <div className="flex flex-col lg:flex-row items-center gap-6 relative w-full">
                         {
                             !isLoading ? (
-                                <Avatar className="w-30 h-30 rounded-full lg:w-50 lg:h-50">
+                                <Avatar className="w-30 h-30 rounded-full lg:w-40 lg:h-40">
                                     <AvatarImage src={company?.imageUrl} alt="Logo" />
                                 </Avatar>
                             ) : (
@@ -54,32 +54,32 @@ const CompanyAbout = () => {
                         <div className="">
                             {
                                 !isLoading ? (
-                                    <h2 className="text-2xl lg:text-4xl font-semibold mb-6">{company?.title}</h2>
+                                    <h2 className="title mb-6 text-center lg:text-left">{company?.title}</h2>
                                 ) : (
                                     <Skeleton className="w-[500px] h-10 mb-6" />
                                 )
                             }
                             {
                                 !isLoading ? (
-                                    <div className="flex flex-col gap-5 lg:flex-row lg:gap-20">
+                                    <div className="flex flex-row gap-10 flex-wrap justify-center md:justify-start md:gap-15">
                                         <div className="flex items-center gap-4">
-                                            <MapPinned className="text-amber-500" />
+                                            <MapPinned className="text-primary" />
                                             <div className="lg:text-center">
-                                                <span className="text-neutral-400">Şəhər</span>
+                                                <span className="text-muted-foreground">Şəhər</span>
                                                 <h6 className="font-bold">{company?.city}</h6>
                                             </div>
                                         </div>
                                         <div className="flex items-center gap-4">
-                                            <CalendarDays className="text-amber-500" />
+                                            <CalendarDays className="text-primary" />
                                             <div className="lg:text-center">
-                                                <span className="text-neutral-400">Təsis tarixi</span>
+                                                <span className="text-muted-foreground">Təsis tarixi</span>
                                                 <h6 className="font-bold">{company?.year}</h6>
                                             </div>
                                         </div>
                                         <div className="flex items-center gap-4">
-                                            <Users className="text-amber-500" />
+                                            <Users className="text-primary" />
                                             <div className="lg:text-center">
-                                                <span className="text-neutral-400">İşçi sayı</span>
+                                                <span className="text-muted-foreground">İşçi sayı</span>
                                                 <h6 className="font-bold">{company?.amountWorker}</h6>
                                             </div>
                                         </div>
@@ -87,9 +87,9 @@ const CompanyAbout = () => {
                                         {
                                             company?.site && (
                                                 <div className="flex items-center gap-4">
-                                                    <Globe className="text-amber-500" />
+                                                    <Globe className="text-primary" />
                                                     <div className="lg:text-center">
-                                                        <span className="text-neutral-400">Əlaqə</span>
+                                                        <span className="text-muted-foreground">Əlaqə</span>
                                                         <h6 className="font-bold">{company?.site}</h6>
                                                     </div>
                                                 </div>
@@ -100,10 +100,6 @@ const CompanyAbout = () => {
                                     <Skeleton className="w-[480px] h-12" />
                                 )
                             }
-
-                            {/* <span className="bg-amber-500 text-white font-medium px-4 py-2 rounded-md absolute -top-3 right-13">
-                                72 vakansiya
-                            </span> */}
                             {
                                 !isLoading ? (
                                     <Button className="absolute top-0 right-0" >
@@ -117,22 +113,22 @@ const CompanyAbout = () => {
                         </div>
                     </div>
                 </div>
-                <div className="p-6 mt-8 shadow-md bg-white rounded-md">
+                <div className="my-6">
                     {
                         !isLoading ? (
-                            <h4 className="text-xl md:text-2xl font-semibold mb-4">Şirkət haqqında</h4>
+                            <h4 className="text-xl lg:text-2xl font-semibold mb-3">Şirkət haqqında</h4>
                         ) : (
-                            <Skeleton className="h-8 mb-4" />
+                            <Skeleton className="h-8 mb-3" />
                         )
                     }
                     {
                         !isLoading ? (
-                            <p className="text-neutral-500">{company?.description}</p>
+                            <p className="text-muted-foreground text-sm md:text-base">{company?.description}</p>
                         ) : (
                             <Skeleton className="h-30" />
                         )
                     }
-                    
+
                 </div>
             </div>
         </section>
