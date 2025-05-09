@@ -6,6 +6,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { companySchema } from '@/lib/helper'
+import { useAddCompanyMutation } from '@/services/vacancy'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Loader, Loader2 } from 'lucide-react'
 import React, { useState } from 'react'
@@ -13,7 +14,7 @@ import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 
 const AddCompany = () => {
-  const [isLoading, setIsLoading] = useState(false);
+  const [AddCompany, {isLoading}] = useAddCompanyMutation();
 
   const form = useForm({
     resolver: zodResolver(companySchema),
@@ -30,7 +31,6 @@ const AddCompany = () => {
 
   async function onSubmit(values) {
     try {
-      setIsLoading(true);
       const formData = new FormData();
       formData.set("Title", values.title);
       formData.set("Logo", values.logo);
@@ -40,25 +40,12 @@ const AddCompany = () => {
       formData.set("AmountWorker", values.amountWorker);
       formData.set("Site", values.site);
 
-      const res = await fetch("/api/company", {
-        method: "POST",
-        body: formData
-      });
-      const data = await res.json();
-
-      if (res.ok) {
-        toast.success(data.message);
-      } else {
-        toast.error(data.message);
-      }
-
-      form.reset();
-      console.log(res)
+      const result = await AddCompany(formData).unwrap();
+      toast.success(result?.msg);
     } catch (error) {
-      console.error(error);
-      toast.error("Ошибка создание компании!");
+      toast.error(error?.data?.msg);
     } finally {
-      setIsLoading(false);
+      form.reset(); 
     }
   }
 

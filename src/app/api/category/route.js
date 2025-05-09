@@ -12,14 +12,15 @@ export async function POST(request) {
 
 
     if (!title || logo.size === 0) {
-        return NextResponse.json({ message: "Все данные обязательны!" }, { status: 400 });
+        return NextResponse.json({ msg: "Все данные обязательны!" }, { status: 400 });
     }
 
     try {
+        console.log(title, logo);
         await connectDB();
         const existingTitle = await Category.findOne({ title });
         if (existingTitle) {
-            return NextResponse.json({ message: "Название должно быть уникальными!" }, { status: 400 });
+            return NextResponse.json({ msg: "Название должно быть уникальными!" }, { status: 400 });
         }
 
 
@@ -34,10 +35,10 @@ export async function POST(request) {
             imageUrl: blob.url
         });
 
-        return NextResponse.json({ message: "Категория успешно добавлен" }, { status: 201 });
+        return NextResponse.json({ msg: "Категория успешно добавлен" }, { status: 201 });
     } catch (error) {
         console.log(error);
-        return NextResponse.json({ message: "Ошибка создания категория" }, { status: 500 });
+        return NextResponse.json({ msg: "Ошибка создания категория" }, { status: 500 });
     }
 
 }
@@ -80,6 +81,6 @@ export async function GET() {
         return NextResponse.json(categoriesWithVacancies, { status: 200 });
     } catch (error) {
         console.log(error);
-        return NextResponse.json({ message: "Ошибка получение категорий" }, { status: 500 });
+        return NextResponse.json({ msg: "Ошибка получение категорий" }, { status: 500 });
     }
 }

@@ -2,40 +2,16 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
+import { useGetCompaniesBySlugQuery } from '@/services/vacancy'
 import { ArrowRight, CalendarDays, Globe, MapPinned, User, Users } from 'lucide-react'
 import { usePathname } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 
 const CompanyAbout = () => {
-    const [company, setCompany] = useState(null);
-    const [isLoading, setIsLoading] = useState(false);
     const pathname = usePathname();
-    const title = (pathname.replace("/companies/", ""));
-    // console.log(title);
+    const slug = (pathname.replace("/companies/", ""));
 
-    useEffect(() => {
-        const getCompany = async () => {
-            try {
-                setIsLoading(true);
-                const res = await fetch(`/api/company/${title}`);
-                const data = await res.json();
-
-                if (res.ok) {
-                    setCompany(data);
-                    console.log(company)
-
-                } else {
-
-                }
-
-            } catch (error) {
-                console.error(error);
-            } finally {
-                setIsLoading(false);
-            }
-        }
-        getCompany();
-    }, []);
+    const {data: company, error, isLoading} = useGetCompaniesBySlugQuery(slug);
 
     return (
         <section className="my-10">

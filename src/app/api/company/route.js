@@ -1,4 +1,5 @@
 import connectDB from "@/config/connectDB";
+import { toSlug } from "@/lib/slug";
 import Company from "@/models/Company";
 import { put } from "@vercel/blob";
 import { NextResponse } from "next/server";
@@ -9,30 +10,10 @@ export async function GET(request) {
 
         const companies = await Company.find();
 
-        
-        // const companiesWithVacanciesCount = await Company.aggregate([
-        //     {
-        //         $lookup: {
-        //             from: 'vacancy', // имя коллекции вакансий
-        //             localField: '_id',  // поле в коллекции companies
-        //             foreignField: 'company',  // поле в коллекции vacancies, которое ссылается на companyId
-        //             as: 'vacancies'
-        //         }
-        //     },
-        //     {
-        //         $project: {
-        //             name: 1,  // отображаем имя компании
-        //             vacanciesCount: { $size: '$vacancy' }  // подсчитываем количество вакансий
-        //         }
-        //     }
-        // ]);
-
-        // console.log(companiesWithVacanciesCount)
-
         return NextResponse.json(companies, { status: 200 });
     } catch (error) {
         console.log(error);
-        return NextResponse.json({ message: "Ошибка получение компании" }, { status: 500 });
+        return NextResponse.json({ msg: "Ошибка получение компании" }, { status: 500 });
     }
 }
 
@@ -48,7 +29,7 @@ export async function POST(request) {
 
 
     if (!title || logo.size === 0 || !description || !city || !year || !amountWorker) {
-        return NextResponse.json({ message: "Все данные обязательны!" }, { status: 400 });
+        return NextResponse.json({ msg: "Все данные обязательны!" }, { status: 400 });
     }
 
     try {
@@ -56,7 +37,7 @@ export async function POST(request) {
 
         const existingTitle = await Company.findOne({ title });
         if (existingTitle) {
-            return NextResponse.json({ message: "Название должно быть уникальными!" }, { status: 400 });
+            return NextResponse.json({ msg: "Название должно быть уникальными!" }, { status: 400 });
         }
 
 
@@ -65,10 +46,9 @@ export async function POST(request) {
             addRandomSuffix: true
         });
 
-
-
         await Company.create({
             title,
+            slug: toSlug(title),
             imageUrl: blob.url,
             description,
             city,
@@ -76,10 +56,10 @@ export async function POST(request) {
             amountWorker
         });
 
-        return NextResponse.json({ message: "Компания успешно добавлен" }, { status: 201 });
+        return NextResponse.json({ msg: "Компания успешно добавлен" }, { status: 201 });
     } catch (error) {
         console.log(error);
-        return NextResponse.json({ message: "Ошибка создания компании" }, { status: 500 });
+        return NextResponse.json({ msg: "Ошибка создания компании" }, { status: 500 });
     }
 }
 

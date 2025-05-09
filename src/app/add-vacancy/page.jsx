@@ -9,6 +9,7 @@ import { Input } from '@/components/ui/input'
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Textarea } from '@/components/ui/textarea'
 import { vacancySchema } from '@/lib/helper'
+import { useAddVacancyMutation, useGetCategoriesQuery, useGetCompaniesQuery } from '@/services/vacancy'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Loader } from 'lucide-react'
 import React, { useEffect, useState } from 'react'
@@ -67,10 +68,10 @@ const experience = [
 ];
 
 const AddVacancy = () => {
-    const [categories, setCategories] = useState([]);
-    const [companies, setCompanies] = useState([]);
+    const { data: categories } = useGetCategoriesQuery();
+    const { data: companies, } = useGetCompaniesQuery();
 
-    const [isLoading, setIsLoading] = useState(false);
+    const [addVacancy, { isLoading }] = useAddVacancyMutation();
 
 
     const form = useForm({
@@ -87,56 +88,16 @@ const AddVacancy = () => {
             requirements: "",
             email: ""
         },
-    })
+    });
 
     async function onSubmit(values) {
         try {
-            setIsLoading(true);
-            const res = await fetch("/api/vacancy", {
-                method: "POST",
-                body: JSON.stringify(values)
-            });
-            const data = await res.json();
-
-            if (res.ok) {
-                toast.success(data.msg);
-            } else {
-                toast.error(data.msg);
-            }
-
+            const result = await addVacancy(values).unwrap();
+            toast.success(result?.msg);
         } catch (error) {
-            console.error(error);
-            toast.error("Ошибка добавление вакансии!");
-        } finally {
-            setIsLoading(false);
-            form.reset();
+            toast.error(error?.data?.msg);
         }
     }
-
-    useEffect(() => {
-        const getCategories = async () => {
-            try {
-                const res = await fetch("/api/category");
-                const data = await res.json();
-                setCategories(data);
-            } catch (error) {
-                console.error(error);
-            }
-        }
-
-        const getCompanies = async () => {
-            try {
-                const res = await fetch("/api/company");
-                const data = await res.json();
-                setCompanies(data);
-            } catch (error) {
-                console.error(error);
-            }
-        }
-
-        getCategories();
-        getCompanies();
-    }, []);
 
     return (
         <section className="py-10">

@@ -1,5 +1,7 @@
 import connectDB from "@/config/connectDB";
 import { toSlug } from "@/lib/slug";
+import Company from "@/models/Company";
+import Category from "@/models/Category";
 import Vacancy from "@/models/Vacancy";
 import { NextResponse } from "next/server";
 
@@ -47,7 +49,7 @@ export async function POST(request) {
         return NextResponse.json({msg: "Вакансия успешно добавлено"}, { status: 201 });
     } catch (error) {
         console.log(error);
-        return NextResponse.json({ error: "Ошибка добавления вакансии" }, { status: 500 });
+        return NextResponse.json({ msg: "Ошибка добавления вакансии" }, { status: 500 });
     }
 
 }

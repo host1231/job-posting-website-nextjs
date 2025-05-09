@@ -6,7 +6,6 @@ import { Input } from './ui/input'
 const InputFile = ({placeholder, field}) => {
     const [fileName, setFileName] = useState("");
 
-
     function handleInput(e) {
         const file = e.target.files?.[0];
         if (file) {

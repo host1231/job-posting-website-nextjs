@@ -5,50 +5,31 @@ import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 import { getFormattedDate } from '@/lib/formattedDate';
 import { fromSlug } from '@/lib/slug';
+import { useAddVacancyViewMutation, useDeleteVacancyMutation, useGetVacanciesBySlugQuery } from '@/services/vacancy';
 import { Building, Clock, EllipsisVertical, Eye, LayoutList, Send, SeparatorVertical, TimerReset } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
 import { toast } from 'sonner';
 
 const VacancyAbout = () => {
-    const [vacancy, setVacancy] = useState(null);
-    const [loading, setLoading] = useState(false);
     const [open, setOpen] = useState(false);
     const pathname = usePathname();
     const slug = pathname.replace("/", "");
 
+    const { data: vacancy, error, isLoading: loading } = useGetVacanciesBySlugQuery(slug);
+    const [addVacancyView, { data, error: viewError, isLoading: viewLoading }] = useAddVacancyViewMutation();
+
+
     useEffect(() => {
-        const addViews = async () => {
-            try {
-                await fetch(`/api/vacancy/${slug}`, {
-                    method: "PATCH"
-                });
-            } catch (error) {
-                console.error(error);
+        (async () => {
+            if(slug) {
+                await addVacancyView(slug).catch(console.error);
             }
-        }
+        })();
 
+    }, [slug, addVacancyView]);
 
-        const getVacancy = async () => {
-            try {
-                setLoading(true);
-                const res = await fetch(`/api/vacancy/${slug}`);
-                const data = await res.json();
-                console.log(data);
-                setVacancy(data);
-            } catch (error) {
-                console.error(error);
-            } finally {
-                setLoading(false)
-            }
-        }
-
-        addViews();
-        getVacancy();
-
-
-
-    }, [slug]);
+  
 
     const getEmail = () => {
         setOpen(true);

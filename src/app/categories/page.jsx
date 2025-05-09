@@ -16,6 +16,7 @@ import InputFile from '@/components/InputFile'
 import Link from 'next/link'
 import CategoryItemSkeleton from '@/components/CategoryItemSkeleton'
 import { toast } from 'sonner'
+import { useAddCategoryMutation, useDeleteCategoryMutation, useGetCategoriesQuery } from '@/services/vacancy'
 
 const formSchema = z.object({
   title: z.string().min(2).max(50),
@@ -29,8 +30,10 @@ const formSchema = z.object({
 
 const Categories = () => {
   const [open, setOpen] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const [categories, setCategories] = useState([]);
+  
+  const { data: categories, error, isLoading, isFetching } = useGetCategoriesQuery();
+  const [addCategory] = useAddCategoryMutation();
+  const [deleteCategory] = useDeleteCategoryMutation();
 
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -40,84 +43,40 @@ const Categories = () => {
     },
   })
 
-  const getCategories = async () => {
-    try {
-      setIsLoading(true);
-      const res = await fetch("/api/category");
-      const data = await res.json();
-      setCategories(data);
-      console.log(data)
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setIsLoading(false)
-    }
-  }
-
-  const deleteCategory = async (e, id) => {
+  const handleDelete = async (e, slug) => {
     try { 
       e.preventDefault();
-      setIsLoading(true);
-      const res = await fetch(`/api/category/${id}`, {
-        method: "DELETE"
-      });
-      const data = await res.json();
-      
-      getCategories();
 
-      if (res.ok) {
-        toast.success(data.message);
-      } else {
-        toast.error(data.message);
-      }
+      const result = await deleteCategory(slug).unwrap();
+      toast.success(result?.msg);
     } catch (error) {
       console.error(error);
-      toast.error("Ошибка удаление категория!");
-    } finally {
-      setIsLoading(false);
-    }
+      toast.error(error?.data?.msg);
+    } 
   }
 
   async function onSubmit(values) {
     try {
-      setIsLoading(true);
       setOpen(false);
 
       const formData = new FormData();
       formData.set("Title", values.title);
       formData.set("Logo", values.logo);
 
-      const res = await fetch("/api/category", {
-        method: "POST",
-        body: formData
-      });
-      const data = await res.json();
-      
-      getCategories();
+      const result = await addCategory(formData).unwrap();
+      toast.success(result?.msg);
 
-      if (res.ok) {
-        toast.success(data.message);
-      } else {
-        toast.error(data.message);
-      }
-
-      form.reset();
-      console.log(res)
     } catch (error) {
-      console.error(error);
-      toast.error("Ошибка создание категория!");
-    } finally {
-      setIsLoading(false);
+      toast.error(error?.data?.msg);
+    }
+    finally {
+      form.reset();
     }
   }
 
   useEffect(() => {
     form.reset();
   }, [open]);
-
-  useEffect(() => {
-    getCategories();
-  }, []);
 
   return (
     <section className="py-10">
@@ -179,11 +138,10 @@ const Categories = () => {
               </Form>
             </DialogContent>
           </Dialog>
+          {(isLoading || isFetching) && [...Array(8)].map((el, index) => <CategoryItemSkeleton key={index} />)}
           {
-            isLoading ?
-              [...Array(8)].map((el, index) => <CategoryItemSkeleton key={index} />) :
               categories?.map(category => (
-                <CategoryItem key={category._id} title={category.title} slug={category.slug} logo={category.imageUrl} vacanciesCount={category.vacanciesCount} onClick={(e) => deleteCategory(e, category._id)} />
+                <CategoryItem key={category._id} title={category.title} slug={category.slug} logo={category.imageUrl} vacanciesCount={category.vacanciesCount} onClick={(e) => handleDelete(e, category.slug)} />
               ))
           }
 

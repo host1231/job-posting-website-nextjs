@@ -5,9 +5,9 @@ import Link from 'next/link'
 import { Button } from './ui/button'
 import { Trash } from 'lucide-react'
 
-const CompanyItem = ({ logo, title, description, onClick }) => {
+const CompanyItem = ({ logo, title, slug, description, onClick }) => {
     return (
-        <Link href={`/companies/${encodeURIComponent(title)}`}>
+        <Link href={`/companies/${slug}`}>
             <Card className="w-full h-full relative">
                 <CardHeader className="flex flex-row items-center md:flex-col md:items-start gap-3">
                     <Avatar className="w-14 h-14 md:w-20 md:h-20 rounded-full border mb-3">

@@ -3,8 +3,8 @@ import mongoose from "mongoose";
 const connectDB = async () => {
   try {
     await mongoose.connect(process.env.MONGODB_URI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
+      serverSelectionTimeoutMS: 30000,  // Тайм-аут на выбор сервера (30 секунд)
+      socketTimeoutMS: 45000
     });
     console.log("Database connected");
   } catch (error) {
