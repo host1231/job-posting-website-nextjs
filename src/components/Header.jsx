@@ -13,34 +13,51 @@ import {
 } from "@/components/ui/dropdown-menu"
 import {
     Avatar,
-    AvatarFallback,
     AvatarImage,
 } from "@/components/ui/avatar"
 import NavMenu from "./NavMenu";
 import { signOut, useSession } from "next-auth/react";
+import MobileMenu from "./MobileMenu";
 
 const Header = () => {
-    const { data } = useSession();
-    console.log(data)
+    const { data: session } = useSession();
+
+    console.log(session)
     return (
         <header className="header shadow-sm py-3 fixed top-0 right-0 w-full bg-white z-40">
             <div className="container">
                 <div className="header__inner flex justify-between items-center">
-                    <div className="logo">
+                    <div className="logo w-35 md:w-50">
                         <Link href="/">
-                            <Image src="/logo.svg" alt="Logo" width={200} height={60} />
+                            <Image 
+                                src="/logo.svg" 
+                                alt="Logo" 
+                                width={0} 
+                                height={0}
+                                style={{width: "100%", height: "auto"}}
+                                priority 
+                            />
                         </Link>
                     </div>
-                    <NavMenu />
-                    <div className="btns flex items-center gap-5">
-                        <Link href="/add-vacancy">
-                        <Button>
-                            <BookText />
-                            Добавить вакансию
-                        </Button>
-                        </Link>
+                    <div className="hidden md:block">
+                        <NavMenu />
+                    </div>
+                    <div className="block md:hidden">
+                        <MobileMenu />
+                    </div>
+                    <div className="hidden btns md:flex items-center gap-5">
                         {
-                            data?.user ? (
+                            session?.user?.role === "admin" && (
+                                <Link href="/add-vacancy">
+                                    <Button>
+                                        <BookText />
+                                        Добавить вакансию
+                                    </Button>
+                                </Link>
+                            )
+                        }
+                        {
+                            session?.user ? (
                                 <DropdownMenu>
                                     <DropdownMenuTrigger asChild>
                                         <Avatar className="w-10 h-10 cursor-pointer">
@@ -49,11 +66,13 @@ const Header = () => {
                                         </Avatar>
                                     </DropdownMenuTrigger>
                                     <DropdownMenuContent className="mt-5 mr-15">
-                                        <DropdownMenuLabel>Salam, {data?.user?.name}</DropdownMenuLabel>
+                                        <DropdownMenuLabel>Salam, {session.user.name}</DropdownMenuLabel>
                                         <DropdownMenuSeparator />
-                                        <DropdownMenuItem>Vakansiyalarım</DropdownMenuItem>
                                         <DropdownMenuItem asChild variant="">
-                                            <Link href="/add-company">Şirkətim</Link>
+                                            <Link href="/add-vacancy">Добавить вакансию</Link>
+                                        </DropdownMenuItem>
+                                        <DropdownMenuItem asChild variant="">
+                                            <Link href="/add-company">Добавить компанию</Link>
                                         </DropdownMenuItem>
                                         <DropdownMenuSeparator />
                                         <DropdownMenuItem variant="destructive" onClick={() => signOut({ callbackUrl: "/" })}>
@@ -72,7 +91,6 @@ const Header = () => {
                                     </Link>
                                 )
                         }
-
                     </div>
                 </div>
             </div>

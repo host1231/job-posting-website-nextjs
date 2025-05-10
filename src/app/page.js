@@ -67,9 +67,9 @@ export default function Home() {
     try {
       e.preventDefault();
       const result = await deleteVacancy(slug).unwrap();
-      toast.success(result.message);
+      toast.success(result.msg);
     } catch (error) {
-      toast.error(err?.data?.message);
+      toast.error(error?.data?.msg);
     }
   }
 

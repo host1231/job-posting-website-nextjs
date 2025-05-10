@@ -4,8 +4,11 @@ import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar'
 import Link from 'next/link'
 import { Button } from './ui/button'
 import { Trash } from 'lucide-react'
+import { useSession } from 'next-auth/react'
 
 const CompanyItem = ({ logo, title, slug, description, onClick }) => {
+    const { data: session } = useSession();
+
     return (
         <Link href={`/companies/${slug}`}>
             <Card className="w-full h-full relative">
@@ -21,9 +24,13 @@ const CompanyItem = ({ logo, title, slug, description, onClick }) => {
                         </CardDescription>
                     </div>
                 </CardHeader>
-                <Button variant="ghost" onClick={onClick} className="absolute top-4 right-4 text-red-500 hover:bg-red-200 hover:text-red-500">
-                    <Trash />
-                </Button>
+                {
+                    session?.user?.role === "admin" && (
+                        <Button variant="ghost" onClick={onClick} className="absolute top-4 right-4 text-red-500 hover:bg-red-200 hover:text-red-500">
+                            <Trash />
+                        </Button>
+                    )
+                }
             </Card>
         </Link>
     )

@@ -20,11 +20,11 @@ const CompanyAbout = () => {
                     <div className="flex flex-col lg:flex-row items-center gap-6 relative w-full">
                         {
                             !isLoading ? (
-                                <Avatar className="w-30 h-30 rounded-full lg:w-40 lg:h-40">
+                                <Avatar className="w-25 h-25 rounded-full lg:w-40 lg:h-40">
                                     <AvatarImage src={company?.imageUrl} alt="Logo" />
                                 </Avatar>
                             ) : (
-                                <Skeleton className="w-30 h-30 rounded-full lg:w-50 lg:h-50" />
+                                <Skeleton className="w-25 h-25 rounded-full lg:w-40 lg:h-40" />
                             )
                         }
                         <div className="">
@@ -32,7 +32,7 @@ const CompanyAbout = () => {
                                 !isLoading ? (
                                     <h2 className="title mb-6 text-center lg:text-left">{company?.title}</h2>
                                 ) : (
-                                    <Skeleton className="w-[500px] h-10 mb-6" />
+                                    <Skeleton className="w-[500px] h-9 mb-6" />
                                 )
                             }
                             {
@@ -73,17 +73,17 @@ const CompanyAbout = () => {
                                         }
                                     </div>
                                 ) : (
-                                    <Skeleton className="w-[480px] h-12" />
+                                    <Skeleton className="max-w-[480px] w-full h-12" />
                                 )
                             }
                             {
                                 !isLoading ? (
-                                    <Button className="absolute top-0 right-0" >
+                                    <Button className="absolute top-10 -right-15 rotate-90 lg:top-0 lg:right-0 lg:rotate-0" >
                                         72 vakansiya
                                         <ArrowRight />
                                     </Button>
                                 ) : (
-                                    <Skeleton className="absolute top-0 right-0 w-[136px] h-[36px]" />
+                                    <Skeleton className="absolute w-[136px] h-[36px] top-10 -right-15 rotate-90 lg:top-0 lg:right-0 lg:rotate-0" />
                                 )
                             }
                         </div>

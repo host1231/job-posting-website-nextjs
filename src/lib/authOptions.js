@@ -32,7 +32,8 @@ export const authOptions = {
                     return {
                         id: user._id,
                         name: user.username,
-                        email: user.email
+                        email: user.email,
+                        role: user.role,
                     }
                 } catch (error) {
                     throw error;
@@ -40,18 +41,18 @@ export const authOptions = {
             }
         })
     ],
-    calback: {
+    callbacks: {
         async jwt({token, user}) {
             if (user) {
-                token = user.id;
+                console.log("User login: ", user);
+                token.role = user.role;
             }
             return token;
         },
         async session({session, token}) {
             if (session.user) {
-                session.user.id = token.id
+                session.user.role = token.role
             }
-            console.log(session)
             return session;
         }
     },

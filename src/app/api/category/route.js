@@ -1,4 +1,5 @@
 import connectDB from "@/config/connectDB";
+import isAdmin from "@/lib/auth";
 import { toSlug } from "@/lib/slug";
 import Category from "@/models/Category";
 import { put } from "@vercel/blob";
@@ -6,6 +7,7 @@ import { NextResponse } from "next/server";
 
 export async function POST(request) {
     const data = await request.formData();
+    const admin = await isAdmin();
 
     const title = data.get("Title");
     const logo = data.get("Logo");
@@ -14,6 +16,11 @@ export async function POST(request) {
     if (!title || logo.size === 0) {
         return NextResponse.json({ msg: "Все данные обязательны!" }, { status: 400 });
     }
+
+    if (!admin) {
+        return NextResponse.json({ msg: "Нет доступа!" }, { status: 403 });
+    }
+
 
     try {
         console.log(title, logo);

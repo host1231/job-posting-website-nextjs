@@ -1,17 +1,24 @@
 import connectDB from "@/config/connectDB";
+import isAdmin from "@/lib/auth";
 import Vacancy from "@/models/Vacancy";
+import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 
 export async function DELETE(request, { params }) {
     const { slug } = params;
+    const admin = await isAdmin();
+
+    if (!admin) {
+        return NextResponse.json({ msg: "Доступ запрещен!" }, { status: 403 });
+    }
 
     try {
         await connectDB();
         await Vacancy.findOneAndDelete({ slug });
-        return NextResponse.json({ message: "Вакансия успешна удалена!" }, { status: 200 });
+        return NextResponse.json({ msg: "Вакансия успешна удалена!" }, { status: 200 });
     } catch (error) {
         console.log(error);
-        return NextResponse.json({ message: "Ошибка удаление вакансии" }, { status: 500 });
+        return NextResponse.json({ msg: "Ошибка удаление вакансии" }, { status: 500 });
     }
 }
 
@@ -26,7 +33,7 @@ export async function GET(request, { params }) {
         return NextResponse.json(vacancy, { status: 200 });
     } catch (error) {
         console.log(error);
-        return NextResponse.json("Ошибка получение вакансии", { status: 500 });
+        return NextResponse.json({msg: "Ошибка получение вакансии"}, { status: 500 });
     }
 }
 
@@ -62,12 +69,12 @@ export async function PATCH(req, { params }) {
         );
 
         if (!vacancy) {
-            return NextResponse.json({ error: "Вакансия не найдена" }, { status: 404 });
+            return NextResponse.json({ msg: "Вакансия не найдена" }, { status: 404 });
         }
 
         return NextResponse.json({ views: vacancy.views });
     } catch (error) {
         console.error(error);
-        return NextResponse.json({ error: "Ошибка обновления просмотров" }, { status: 500 });
+        return NextResponse.json({ msg: "Ошибка обновления просмотров" }, { status: 500 });
     }
 }

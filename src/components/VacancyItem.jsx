@@ -1,3 +1,5 @@
+"use client"
+
 import React from 'react'
 import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from './ui/card'
 import { Avatar, AvatarImage } from './ui/avatar'
@@ -5,8 +7,10 @@ import { Clock, Eye, Trash } from 'lucide-react'
 import Link from 'next/link'
 import { toSlug } from '@/lib/slug'
 import { Button } from './ui/button'
+import { useSession } from 'next-auth/react'
 
 const VacancyItem = ({id, title, companyTitle, companyImageUrl, views, createdAt, slug, onClick}) => {
+    const {data: session} = useSession();
     return (
         <Link href={`/${slug}`}>
             <Card className="w-full h-full gap-2 md:gap-6 justify-between relative">
@@ -29,9 +33,13 @@ const VacancyItem = ({id, title, companyTitle, companyImageUrl, views, createdAt
                         {views}
                     </span>
                 </CardFooter>
-                <Button variant="ghost" onClick={onClick} className="absolute top-4 right-4 text-red-500 hover:bg-red-200 hover:text-red-500">
-                    <Trash />
-                </Button>
+                {
+                    session?.user?.role === "admin" && (
+                        <Button variant="ghost" onClick={onClick} className="absolute top-4 right-4 text-red-500 hover:bg-red-200 hover:text-red-500">
+                            <Trash />
+                        </Button>
+                    )
+                }
             </Card>
         </Link>
     )
