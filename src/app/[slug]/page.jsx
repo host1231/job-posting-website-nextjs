@@ -6,7 +6,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { getFormattedDate } from '@/lib/formattedDate';
 import { fromSlug } from '@/lib/slug';
 import { useAddVacancyViewMutation, useDeleteVacancyMutation, useGetVacanciesBySlugQuery } from '@/services/vacancy';
-import { Building, Clock, EllipsisVertical, Eye, LayoutList, Send, SeparatorVertical, TimerReset } from 'lucide-react';
+import { Building, Clock, EllipsisVertical, Eye, HandCoins, LayoutList, Send, SeparatorVertical, TimerReset } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
 import { toast } from 'sonner';
@@ -22,14 +22,14 @@ const VacancyAbout = () => {
 
     useEffect(() => {
         (async () => {
-            if(slug) {
+            if (slug) {
                 await addVacancyView(slug).catch(console.error);
             }
         })();
 
     }, [slug, addVacancyView]);
 
-  
+
 
     const getEmail = () => {
         setOpen(true);
@@ -54,6 +54,7 @@ const VacancyAbout = () => {
                                                 <div className="flex gap-2 mt-2">
                                                     <Skeleton className="w-[70px] h-6" />
                                                     <Skeleton className="w-[70px] h-6" />
+                                                    <Skeleton className="w-[70px] h-6" />
                                                 </div>
                                             </div>
                                         </div>
@@ -75,11 +76,19 @@ const VacancyAbout = () => {
                                                         {vacancy?.categories[0]?.title}
                                                     </span>
                                                 </div>
-                                                <div className="flex gap-2 text-muted-foreground mt-2 font-medium">
+                                                <div className="flex gap-4 text-muted-foreground mt-2 font-medium">
                                                     <span className="flex items-center gap-1">
                                                         <Clock size={18} />
                                                         {getFormattedDate(vacancy?.createdAt)}
                                                     </span>
+                                                    {
+                                                        vacancy?.salary && (
+                                                            <span className="flex items-center gap-1">
+                                                                <HandCoins size={18} />
+                                                                {vacancy?.salary} ₼
+                                                            </span>
+                                                        )
+                                                    }
                                                     <span className="flex items-center gap-1">
                                                         <Eye size={18} />
                                                         {vacancy?.views}
@@ -153,6 +162,10 @@ const VacancyAbout = () => {
                                                 <Skeleton className="w-[80px] h-5 mb-1" />
                                                 <Skeleton className="w-[120px] h-5 mb-1" />
                                             </div>
+                                            <div>
+                                                <Skeleton className="w-[80px] h-5 mb-1" />
+                                                <Skeleton className="w-[120px] h-5 mb-1" />
+                                            </div>
                                         </div>
                                     )
                                     : (
@@ -165,6 +178,12 @@ const VacancyAbout = () => {
                                                 <span className="block text-sm text-muted-foreground font-light mb-1">Paylaşılıb</span>
                                                 {getFormattedDate(vacancy?.createdAt, true)}
                                             </p>
+
+                                            <p className="font-medium">
+                                                <span className="block text-sm text-muted-foreground font-light mb-1">Maaş</span>
+                                                {vacancy?.salary ? `${vacancy?.salary} ₼` : "Razılaşma yolu ilə"} 
+                                            </p>
+
                                             <p className="font-medium">
                                                 <span className="block text-sm text-muted-foreground font-light mb-1">Vakansiya növü</span>
                                                 {vacancy?.type}

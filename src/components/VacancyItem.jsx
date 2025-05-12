@@ -8,9 +8,10 @@ import Link from 'next/link'
 import { toSlug } from '@/lib/slug'
 import { Button } from './ui/button'
 import { useSession } from 'next-auth/react'
+import { cn } from '@/lib/utils'
 
-const VacancyItem = ({id, title, companyTitle, companyImageUrl, views, createdAt, slug, onClick}) => {
-    const {data: session} = useSession();
+const VacancyItem = ({ id, title, companyTitle, companyImageUrl, views, createdAt, slug, onClick, salary }) => {
+    const { data: session } = useSession();
     return (
         <Link href={`/${slug}`}>
             <Card className="w-full h-full gap-2 md:gap-6 justify-between relative">
@@ -40,6 +41,15 @@ const VacancyItem = ({id, title, companyTitle, companyImageUrl, views, createdAt
                         </Button>
                     )
                 }
+                {
+                    salary && (
+                        <span className={cn("flex items-center gap-1 absolute top-4 right-6 text-lg text-muted-foreground font-light", session?.user?.role === "admin" && "top-10 right-7")}>
+                            {/* <Eye size={15} /> */}
+                            ₼
+                        </span>
+                    )
+                }
+
             </Card>
         </Link>
     )

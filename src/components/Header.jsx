@@ -18,7 +18,6 @@ import {
 import NavMenu from "./NavMenu";
 import { signOut, useSession } from "next-auth/react";
 import MobileMenu from "./MobileMenu";
-import Logo from "@/../public/logo.svg"
 
 const Header = () => {
     const { data: session } = useSession();
@@ -31,7 +30,7 @@ const Header = () => {
                     <div className="logo w-35 md:w-50">
                         <Link href="/">
                             <Image 
-                                src={Logo} 
+                                src="https://vuxz9tznczckbg5g.public.blob.vercel-storage.com/logo-nyGodazl34R1OIV4ZkMydrTbMRYgdS.svg" 
                                 alt="Logo" 
                                 width={0} 
                                 height={0}

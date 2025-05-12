@@ -16,6 +16,8 @@ export async function GET(request) {
         const education = searchParams.get("education");
         const experience = searchParams.get("experience");
         const search = searchParams.get("search");
+        const page = parseInt(searchParams.get("page")) || 1;
+        const limit = parseInt(searchParams.get("limit")) || 10;
 
         const filters = {};
 
@@ -26,11 +28,23 @@ export async function GET(request) {
 
         console.log(filters)
 
-        const vacancies = await Vacancy.find(filters)
-            .populate("company")
-            .populate("categories");
+        const skip = (page - 1) * limit;
 
-        return NextResponse.json(vacancies, { status: 200 });
+        const [vacancies, total] = await Promise.all([
+            Vacancy.find(filters)
+                .populate("company")
+                .populate("categories")
+                .skip(skip)
+                .limit(limit),
+            Vacancy.countDocuments(filters)
+        ]);
+
+        return NextResponse.json({
+            vacancies,
+            total,
+            totalPages: Math.ceil(total / limit),
+            currentPage: page
+        }, { status: 200 });
     } catch (error) {
         console.log(error);
         return NextResponse.json({ error: "Ошибка получение вакансии" }, { status: 500 });

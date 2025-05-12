@@ -147,7 +147,8 @@ const AddVacancy = () => {
                                                         data={categories}
                                                         value={field.value}
                                                         onChange={field.onChange}
-                                                        title="Выберите категорию"
+                                                        title={"Выберите категорию"}
+                                                        size={"w-70"}
                                                     />
                                                 </FormControl>
                                                 <FormMessage />
@@ -263,5 +264,7 @@ const AddVacancy = () => {
         </section>
     )
 }
+
+
 
 export default AddVacancy

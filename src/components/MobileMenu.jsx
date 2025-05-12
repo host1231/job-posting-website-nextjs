@@ -4,9 +4,7 @@ import { BriefcaseBusiness, Building, LayoutList, Search } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Drawer } from 'vaul';
-import { Button } from './ui/button';
 import { DrawerDescription } from './ui/drawer';
-import Logo from "@/../public/logo.svg"
 
 const MobileMenu = () => {
   return (
@@ -36,7 +34,7 @@ const MobileMenu = () => {
               <Link href="/">
                 <Drawer.Title>
                   <Image
-                    src={Logo}
+                    src="https://vuxz9tznczckbg5g.public.blob.vercel-storage.com/logo-nyGodazl34R1OIV4ZkMydrTbMRYgdS.svg"
                     alt="Logo"
                     width={0}
                     height={0}
