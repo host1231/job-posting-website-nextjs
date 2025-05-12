@@ -10,7 +10,10 @@ export const vacancyApi = createApi({
     tagTypes: ["Vacancy", "Category", "Company"],
     endpoints: (builder) => ({
         getVacancies: builder.query({
-            query: () => "vacancy",
+            query: (params) => {
+                const query = new URLSearchParams(params).toString();
+                return `vacancy?${query}`;
+            },
             providesTags: ["Vacancy"]
         }),
         getVacanciesBySlug: builder.query({

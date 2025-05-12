@@ -6,7 +6,7 @@ import { ChevronDown, ChevronUp } from 'lucide-react'
 import { Checkbox } from './ui/checkbox'
 import { cn } from '@/lib/utils'
 
-const DropdownMenuCheckbox = ({ title, data, value = [], onChange }) => {
+const DropdownMenuCheckbox = ({ title, data, value = [], onChange, size }) => {
     const [open, setOpen] = useState(false);
 
     const toggleItem = (id) => {
@@ -18,26 +18,26 @@ const DropdownMenuCheckbox = ({ title, data, value = [], onChange }) => {
     return (
         <DropdownMenu onOpenChange={(open) => setOpen(open)}>
             <DropdownMenuTrigger asChild>
-                <Button variant="custom" size="xl" className={cn("w-40 h-11 flex justify-between text-muted-foreground hover:text-primary", open && "text-primary border-primary")}>
+                <Button variant="custom" size="xl" className={cn("h-11 flex justify-between text-muted-foreground hover:text-primary", open && "text-primary border-primary", size ? size : "w-45")}>
                     {value.length > 0 ? `${value.length} выбрано` : title}
                     {
                         open ? <ChevronUp /> : <ChevronDown />
                     }
                 </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="w-40">
+            <DropdownMenuContent className={cn(size ? size : "w-45")}>
                 {data?.map((item) => (
                     <DropdownMenuItem
-                        key={item._id}
+                        key={item._id ? item._id : item.value}
                         onSelect={(e) => {
                             e.preventDefault()
-                            toggleItem(item._id)
+                            toggleItem(item._id ? item._id : item.value)
                         }}
                         className="cursor-pointer text-muted-foreground text"
                     >
                         <Checkbox
-                            checked={value.includes(item._id)}
-                            onCheckedChange={() => toggleItem(item._id)}
+                            checked={value.includes(item._id ? item._id : item.value)}
+                            onCheckedChange={() => toggleItem(item._id ? item._id : item.value)}
                             className="mr-2"
                         />
                         {item.title}

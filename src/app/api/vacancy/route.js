@@ -7,11 +7,26 @@ import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import isAdmin from "@/lib/auth";
 
-export async function GET() {
+export async function GET(request) {
     try {
         await connectDB();
 
-        const vacancies = await Vacancy.find()
+        const { searchParams } = new URL(request.url);
+        const types = searchParams.get("types");
+        const education = searchParams.get("education");
+        const experience = searchParams.get("experience");
+        const search = searchParams.get("search");
+
+        const filters = {};
+
+        if (types) filters.type = { $in: types.split(",") };
+        if (education) filters.education = { $in: education.split(",") };
+        if (experience) filters.experience = { $in: experience.split(",") };
+        if (search) filters.title = { $regex: search, $options: "i" };
+
+        console.log(filters)
+
+        const vacancies = await Vacancy.find(filters)
             .populate("company")
             .populate("categories");
 

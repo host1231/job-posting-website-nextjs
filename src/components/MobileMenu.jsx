@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { Drawer } from 'vaul';
 import { Button } from './ui/button';
 import { DrawerDescription } from './ui/drawer';
+import Logo from "@/../public/logo.svg"
 
 const MobileMenu = () => {
   return (
@@ -35,7 +36,7 @@ const MobileMenu = () => {
               <Link href="/">
                 <Drawer.Title>
                   <Image
-                    src="/logo.svg"
+                    src={Logo}
                     alt="Logo"
                     width={0}
                     height={0}
@@ -47,7 +48,7 @@ const MobileMenu = () => {
             </div>
             <DrawerDescription className="hidden">test</DrawerDescription>
             <nav className="flex flex-col my-5 ">
-              <Link href="/vacancies" className="flex items-center gap-2 px-3 py-4 hover:bg-amber-100 rounded-md text-muted-foreground hover:text-amber-500">
+              <Link href="/" className="flex items-center gap-2 px-3 py-4 hover:bg-amber-100 rounded-md text-muted-foreground hover:text-amber-500">
                 <Search size={18} />
                 Vakansiyalar
               </Link>
