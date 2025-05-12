@@ -1,26 +1,15 @@
 "use client"
 import BadgeList from "@/components/BadgeList";
 import DropdownMenuCheckbox from "@/components/DropdownMenuCheckbox";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import VacancyItem from "@/components/VacancyItem";
 import VacancyItemSkeleton from "@/components/VacancyItemSkeleton";
 import { getFormattedDate } from "@/lib/formattedDate";
 import { useDeleteVacancyMutation, useGetVacanciesQuery } from "@/services/vacancy";
-import { X } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { toast } from "sonner";
-import {
-  Pagination,
-  PaginationContent,
-  PaginationEllipsis,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-} from "@/components/ui/pagination"
+import PaginationWrapper from "@/components/PaginationWrapper";
 
 
 
@@ -133,69 +122,41 @@ export default function Home() {
 
 
   return (
-    <div className="my-10">
-      <div className="container">
-        <div className="py-10 px-5 shadow-md my-6 rounded-md border bg-white">
-          <div className="">
-            <h2 className="title mb-1">Vakansiyalar</h2>
-            <p className="text-muted-foreground  mb-3 text-sm">18 / 837 nəticə göstərilir</p>
-            <Input placeholder="Vakansiya adı və ya açar söz" value={search} onChange={(e) => setSearch(e.target.value)} />
-            <div className="flex gap-3 my-3 overflow-x-auto">
-              <DropdownMenuCheckbox title="Тип" data={type} value={typeF} onChange={setTypeF} />
-              <DropdownMenuCheckbox title="Образование" data={education} value={educationF} onChange={setEducationF} />
-              <DropdownMenuCheckbox title="Опыт работы" data={experience} value={experienceF} onChange={setExperienceF} />
-            </div>
-            <div className="flex gap-2">
-              <BadgeList data={typeF} setData={setTypeF} />
-              <BadgeList data={educationF} setData={setEducationF} />
-              <BadgeList data={experienceF} setData={setExperienceF} />
+    <Suspense>
+      <section className="my-10">
+        <div className="container">
+          <div className="py-10 px-5 shadow-md my-6 rounded-md border bg-white">
+            <div className="">
+              <h2 className="title mb-1">Vakansiyalar</h2>
+              <p className="text-muted-foreground  mb-3 text-sm">{`1 / ${data?.total ? data?.total : "1"} nəticə göstərili`}r</p>
+              <Input placeholder="Vakansiya adı və ya açar söz" value={search} onChange={(e) => setSearch(e.target.value)} />
+              <div className="flex gap-3 my-3 overflow-x-auto">
+                <DropdownMenuCheckbox title="Тип" data={type} value={typeF} onChange={setTypeF} />
+                <DropdownMenuCheckbox title="Образование" data={education} value={educationF} onChange={setEducationF} />
+                <DropdownMenuCheckbox title="Опыт работы" data={experience} value={experienceF} onChange={setExperienceF} />
+              </div>
+              <div className="flex gap-2">
+                <BadgeList data={typeF} setData={setTypeF} />
+                <BadgeList data={educationF} setData={setEducationF} />
+                <BadgeList data={experienceF} setData={setExperienceF} />
+              </div>
             </div>
           </div>
-        </div>
-        <div className="grid md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {(isLoading || isFetching) && [...Array(12)].map((el, index) => <VacancyItemSkeleton key={index} />)}
+          <div className="grid md:grid-cols-3 lg:grid-cols-4 gap-6">
+            {(isLoading || isFetching) && [...Array(12)].map((el, index) => <VacancyItemSkeleton key={index} />)}
+            {
+              data?.vacancies?.map(vacancy => (
+                <VacancyItem key={vacancy._id} id={vacancy._id} views={vacancy.views} title={vacancy.title} companyTitle={vacancy.company.title} companyImageUrl={vacancy.company.imageUrl} createdAt={getFormattedDate(vacancy.createdAt)} slug={vacancy.slug} onClick={(e) => handleDelete(e, vacancy.slug)} salary={vacancy.salary} />
+              ))
+            }
+          </div>
           {
-            data?.vacancies?.map(vacancy => (
-              <VacancyItem key={vacancy._id} id={vacancy._id} views={vacancy.views} title={vacancy.title} companyTitle={vacancy.company.title} companyImageUrl={vacancy.company.imageUrl} createdAt={getFormattedDate(vacancy.createdAt)} slug={vacancy.slug} onClick={(e) => handleDelete(e, vacancy.slug)} salary={vacancy.salary} />
-            ))
+            data?.vacancies?.length ? (
+              <PaginationWrapper page={page} setPage={setPage} totalPages={data?.totalPages} />
+            ) : ""
           }
         </div>
-        <Pagination className="my-6 text-neutral-600">
-          <PaginationContent>
-            <PaginationItem>
-              <PaginationPrevious
-                onClick={() => setPage(prev => Math.max(prev - 1, 1))}
-                className={page === 1 ? "pointer-events-none opacity-50" : ""}
-              />
-            </PaginationItem>
-
-            {
-              [...Array(data?.totalPages || 0)].map((_, index) => {
-                const pageNum = index + 1;
-                return (
-                  <PaginationItem key={pageNum}>
-                    <PaginationLink
-                      isActive={page === pageNum}
-                      onClick={() => setPage(pageNum)}
-                    >
-                      {pageNum}
-                    </PaginationLink>
-                  </PaginationItem>
-                );
-              })
-            }
-
-            <PaginationItem>
-              <PaginationNext
-                onClick={() => setPage(prev => prev + 1)}
-                className={page >= data?.totalPages ? "pointer-events-none opacity-50" : ""}
-              />
-            </PaginationItem>
-          </PaginationContent>
-        </Pagination>
-
-
-      </div>
-    </div>
+      </section>
+    </Suspense>
   )
 }

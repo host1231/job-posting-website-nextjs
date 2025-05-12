@@ -1,6 +1,3 @@
-// utils/slugHelpers.js
-
-// Функция для преобразования названия в слаг
 export function toSlug(str) {
     const map = {
         'ə': 'e',
