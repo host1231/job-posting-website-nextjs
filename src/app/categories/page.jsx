@@ -102,7 +102,7 @@ const Categories = () => {
           {(isLoading || isFetching) && [...Array(8)].map((el, index) => <CategoryItemSkeleton key={index} />)}
           {
               categories?.map(category => (
-                <CategoryItem key={category._id} title={category.title} slug={category.slug} logo={category.imageUrl} vacanciesCount={category.vacanciesCount} onClick={(e) => handleDelete(e, category.slug)} />
+                <CategoryItem key={category._id} id={category._id} title={category.title} slug={category.slug} logo={category.imageUrl} vacanciesCount={category.vacanciesCount} onClick={(e) => handleDelete(e, category.slug)} />
               ))
           }
 

@@ -172,7 +172,7 @@ const VacancyAbout = () => {
                                         <div className="flex flex-col gap-3 my-5">
                                             <p className="font-medium">
                                                 <span className="block text-sm text-muted-foreground font-light mb-1">Son tarix</span>
-                                                {getFormattedDate(vacancy?.createdAt, true)}
+                                                {getFormattedDate(vacancy?.expiresAt, true)}
                                             </p>
                                             <p className="font-medium">
                                                 <span className="block text-sm text-muted-foreground font-light mb-1">Paylaşılıb</span>

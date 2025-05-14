@@ -10,6 +10,9 @@ export const vacancySchema = z.object({
   company: z.string().min(1, {
     message: "Выберите компанию"
   }),
+  expiresAt: z.string().min(1, {
+    message: "Son tarixi seçin"
+  }),
   salary: z.string().optional(),
   type: z.string().min(1, {
     message: "Выберите тип вакансии"

@@ -59,9 +59,9 @@ const SignUp = () => {
         }
     }
     return (
-        <div className="h-full flex flex-col justify-center items-center">
-            <div className="max-w-lg w-full shadow-md px-10 py-6">
-                <h4 className="text-4xl font-bold mb-10 text-center text-amber-500">Yeni hesab yarat!</h4>
+        <div className="md:h-full flex flex-col justify-center items-center">
+            <div className="max-w-lg w-full shadow-md px-5 md:px-10 py-6 border rounded-md my-10">
+                <h4 className="text-2xl md:text-4xl font-bold mb-10 text-center text-amber-500">Yeni hesab yarat!</h4>
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
                         <FormField

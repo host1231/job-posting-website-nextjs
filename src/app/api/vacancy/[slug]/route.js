@@ -39,7 +39,7 @@ export async function GET(request, { params }) {
 
 
 const viewCache = new Map();
-const COOLDOWN = 24 * 60 * 60 * 1000; // 24 час
+const COOLDOWN = 2 * 24 * 60 * 60 * 1000;
 
 function getClientIp(req) {
     const forwarded = req.headers.get("x-forwarded-for");

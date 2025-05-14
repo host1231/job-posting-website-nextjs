@@ -32,7 +32,7 @@ export const vacancyApi = createApi({
                 url: `vacancy/${slug}`,
                 method: "DELETE"
             }),
-            invalidatesTags: ["Vacancy"]
+            invalidatesTags: ["Vacancy", "Category", "Company"]
         }),
         addVacancy: builder.mutation({
             query: (body) => ({
@@ -40,7 +40,7 @@ export const vacancyApi = createApi({
                 method: "POST",
                 body
             }),
-            invalidatesTags: ["Vacancy"]
+            invalidatesTags: ["Vacancy", "Category", "Company"]
         }),
         getCategories: builder.query({
             query: () => "category",

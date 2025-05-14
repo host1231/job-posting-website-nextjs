@@ -34,7 +34,7 @@ const Companies = () => {
           {(isLoading || isFetching) && [...Array(8)].map((el, index) => <CompanyItemSkeleton key={index} />)}
           {
             companies?.map(company => (
-              <CompanyItem key={company._id} logo={company.imageUrl} title={company.title} slug={company.slug} description={company.description} onClick={(e) => handleDelete(e, company.slug)} />
+              <CompanyItem key={company._id} logo={company.imageUrl} title={company.title} slug={company.slug} description={company.description} onClick={(e) => handleDelete(e, company.slug)} vacancyCount={company.vacancyCount} />
             ))
           }
         </div>

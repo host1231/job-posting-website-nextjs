@@ -6,7 +6,7 @@ import { ArrowRight, Trash } from 'lucide-react'
 import Link from 'next/link'
 import { useSession } from 'next-auth/react'
 
-const CategoryItem = ({ title, slug, logo, onClick, vacanciesCount }) => {
+const CategoryItem = ({ id, title, slug, logo, onClick, vacanciesCount }) => {
     const { data: session } = useSession();
 
     return (

@@ -10,9 +10,30 @@ export async function GET(request) {
     try {
         await connectDB();
 
-        const companies = await Company.find();
+        // const companies = await Company.find();
+        const companiesWithVacancies = await Company.aggregate([
+            {
+                $lookup: {
+                    from: "vacancies",
+                    localField: "_id",
+                    foreignField: "company",
+                    as: "vacancies"
+                },
 
-        return NextResponse.json(companies, { status: 200 });
+            },
+            {
+                $addFields: {
+                    vacancyCount: { $size: "$vacancies" }
+                }
+            },
+            {
+                $project: {
+                    vacancies: 0
+                }
+            }
+        ]);
+
+        return NextResponse.json(companiesWithVacancies, { status: 200 });
     } catch (error) {
         console.log(error);
         return NextResponse.json({ msg: "Ошибка получение компании" }, { status: 500 });

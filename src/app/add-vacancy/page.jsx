@@ -8,10 +8,12 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { Input } from '@/components/ui/input'
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Textarea } from '@/components/ui/textarea'
+import { expiresAt } from '@/constant/data'
 import { vacancySchema } from '@/lib/helper'
 import { useAddVacancyMutation, useGetCategoriesQuery, useGetCompaniesQuery } from '@/services/vacancy'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Loader } from 'lucide-react'
+import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
@@ -73,6 +75,8 @@ const AddVacancy = () => {
 
     const [addVacancy, { isLoading }] = useAddVacancyMutation();
 
+    const router = useRouter();
+
 
     const form = useForm({
         resolver: zodResolver(vacancySchema),
@@ -80,6 +84,7 @@ const AddVacancy = () => {
             title: "",
             categories: [],
             company: "",
+            expiresAt: "",
             salary: "",
             type: "",
             education: "",
@@ -94,8 +99,11 @@ const AddVacancy = () => {
         try {
             const result = await addVacancy(values).unwrap();
             toast.success(result?.msg);
+            router.push("/");
         } catch (error) {
             toast.error(error?.data?.msg);
+        } finally {
+            form.reset();
         }
     }
 
@@ -109,18 +117,32 @@ const AddVacancy = () => {
                     <CardContent>
                         <Form {...form}>
                             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-                                <FormField
-                                    control={form.control}
-                                    name="company"
-                                    render={({ field }) => (<FormItem className="w-full">
-                                        <FormLabel>Компания</FormLabel>
-                                        <FormControl>
-                                            <CustomSelect placeholder="Выберите компанию" data={companies} value={field.value} onChange={field.onChange} />
-                                        </FormControl>
-                                        <FormMessage />
-                                    </FormItem>)
-                                    }
-                                />
+                                <div className="flex items-start gap-5 ">
+                                    <FormField
+                                        control={form.control}
+                                        name="company"
+                                        render={({ field }) => (<FormItem className="w-[80%]">
+                                            <FormLabel>Компания</FormLabel>
+                                            <FormControl>
+                                                <CustomSelect placeholder="Выберите компанию" data={companies} value={field.value} onChange={field.onChange} />
+                                            </FormControl>
+                                            <FormMessage />
+                                        </FormItem>)
+                                        }
+                                    />
+                                    <FormField
+                                        control={form.control}
+                                        name="expiresAt"
+                                        render={({ field }) => (<FormItem className="w-[25%]">
+                                            <FormLabel>Son tarix</FormLabel>
+                                            <FormControl>
+                                                <CustomSelect placeholder="Son tarixi seçin" data={expiresAt} value={field.value} onChange={field.onChange} />
+                                            </FormControl>
+                                            <FormMessage />
+                                        </FormItem>)
+                                        }
+                                    />
+                                </div>
                                 <div className="flex items-start gap-5 ">
                                     <FormField
                                         control={form.control}

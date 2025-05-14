@@ -62,6 +62,9 @@ const vacancySchema = new mongoose.Schema(
         createdAt: {
             type: Date,
             default: Date.now
+        },
+        expiresAt: {
+            type: Date,
         }
     }
 );

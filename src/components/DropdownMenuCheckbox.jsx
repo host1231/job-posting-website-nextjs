@@ -28,16 +28,16 @@ const DropdownMenuCheckbox = ({ title, data, value = [], onChange, size }) => {
             <DropdownMenuContent className={cn(size ? size : "w-45")}>
                 {data?.map((item) => (
                     <DropdownMenuItem
-                        key={item._id ? item._id : item.value}
+                        key={item.slug ? item.slug : item.value}
                         onSelect={(e) => {
                             e.preventDefault()
-                            toggleItem(item._id ? item._id : item.value)
+                            toggleItem(item.slug ? item.slug : item.value)
                         }}
                         className="cursor-pointer text-muted-foreground text"
                     >
                         <Checkbox
-                            checked={value.includes(item._id ? item._id : item.value)}
-                            onCheckedChange={() => toggleItem(item._id ? item._id : item.value)}
+                            checked={value.includes(item.slug ? item.slug : item.value)}
+                            onCheckedChange={() => toggleItem(item.slug ? item.slug : item.value)}
                             className="mr-2"
                         />
                         {item.title}

@@ -21,7 +21,6 @@ export async function POST(request) {
         return NextResponse.json({ msg: "Нет доступа!" }, { status: 403 });
     }
 
-
     try {
         console.log(title, logo);
         await connectDB();

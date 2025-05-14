@@ -1,9 +1,11 @@
 "use client"
+import CompanyHeader from '@/components/CompanyHeader'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
 import { useGetCompaniesBySlugQuery } from '@/services/vacancy'
 import { ArrowRight, CalendarDays, Globe, MapPinned, User, Users } from 'lucide-react'
+import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 
@@ -11,84 +13,12 @@ const CompanyAbout = () => {
     const pathname = usePathname();
     const slug = (pathname.replace("/companies/", ""));
 
-    const {data: company, error, isLoading} = useGetCompaniesBySlugQuery(slug);
+    const { data, error, isLoading } = useGetCompaniesBySlugQuery(slug);
 
     return (
         <section className="my-10">
             <div className="container">
-                <div className="border p-6 shadow-md bg-white rounded-md">
-                    <div className="flex flex-col lg:flex-row items-center gap-6 relative w-full">
-                        {
-                            !isLoading ? (
-                                <Avatar className="w-25 h-25 rounded-full lg:w-40 lg:h-40">
-                                    <AvatarImage src={company?.imageUrl} alt="Logo" />
-                                </Avatar>
-                            ) : (
-                                <Skeleton className="w-25 h-25 rounded-full lg:w-40 lg:h-40" />
-                            )
-                        }
-                        <div className="">
-                            {
-                                !isLoading ? (
-                                    <h2 className="title mb-6 text-center lg:text-left">{company?.title}</h2>
-                                ) : (
-                                    <Skeleton className="w-[500px] h-9 mb-6" />
-                                )
-                            }
-                            {
-                                !isLoading ? (
-                                    <div className="flex flex-row gap-10 flex-wrap justify-center md:justify-start md:gap-15">
-                                        <div className="flex items-center gap-4">
-                                            <MapPinned className="text-primary" />
-                                            <div className="lg:text-center">
-                                                <span className="text-muted-foreground">Şəhər</span>
-                                                <h6 className="font-bold">{company?.city}</h6>
-                                            </div>
-                                        </div>
-                                        <div className="flex items-center gap-4">
-                                            <CalendarDays className="text-primary" />
-                                            <div className="lg:text-center">
-                                                <span className="text-muted-foreground">Təsis tarixi</span>
-                                                <h6 className="font-bold">{company?.year}</h6>
-                                            </div>
-                                        </div>
-                                        <div className="flex items-center gap-4">
-                                            <Users className="text-primary" />
-                                            <div className="lg:text-center">
-                                                <span className="text-muted-foreground">İşçi sayı</span>
-                                                <h6 className="font-bold">{company?.amountWorker}</h6>
-                                            </div>
-                                        </div>
-
-                                        {
-                                            company?.site && (
-                                                <div className="flex items-center gap-4">
-                                                    <Globe className="text-primary" />
-                                                    <div className="lg:text-center">
-                                                        <span className="text-muted-foreground">Əlaqə</span>
-                                                        <h6 className="font-bold">{company?.site}</h6>
-                                                    </div>
-                                                </div>
-                                            )
-                                        }
-                                    </div>
-                                ) : (
-                                    <Skeleton className="max-w-[480px] w-full h-12" />
-                                )
-                            }
-                            {
-                                !isLoading ? (
-                                    <Button className="absolute top-10 -right-15 rotate-90 lg:top-0 lg:right-0 lg:rotate-0" >
-                                        72 vakansiya
-                                        <ArrowRight />
-                                    </Button>
-                                ) : (
-                                    <Skeleton className="absolute w-[136px] h-[36px] top-10 -right-15 rotate-90 lg:top-0 lg:right-0 lg:rotate-0" />
-                                )
-                            }
-                        </div>
-                    </div>
-                </div>
+                <CompanyHeader data={data?.company} totalVacancies={data?.totalVacancies} isLoading={isLoading} />
                 <div className="my-6">
                     {
                         !isLoading ? (
@@ -99,7 +29,7 @@ const CompanyAbout = () => {
                     }
                     {
                         !isLoading ? (
-                            <p className="text-muted-foreground text-sm md:text-base">{company?.description}</p>
+                            <p className="text-muted-foreground text-sm md:text-base">{data?.company?.description}</p>
                         ) : (
                             <Skeleton className="h-30" />
                         )

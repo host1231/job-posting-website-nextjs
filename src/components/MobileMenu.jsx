@@ -34,7 +34,7 @@ const MobileMenu = () => {
               <Link href="/">
                 <Drawer.Title>
                   <Image
-                    src="https://vuxz9tznczckbg5g.public.blob.vercel-storage.com/logo-nyGodazl34R1OIV4ZkMydrTbMRYgdS.svg"
+                    src="https://vuxz9tznczckbg5g.public.blob.vercel-storage.com/Logo-lo6v2oUeBqG9OcMtA2GWbBAl2zQBC7.svg"
                     alt="Logo"
                     width={0}
                     height={0}
