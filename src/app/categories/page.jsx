@@ -82,7 +82,7 @@ const Categories = () => {
   }, [open]);
 
   return (
-    <section className="py-10">
+    <section className="py-5 md:py-10">
       <div className="container">
         <div className="flex justify-between items-end mb-6">
           <h2 className="title">

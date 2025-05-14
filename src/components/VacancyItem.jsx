@@ -36,14 +36,14 @@ const VacancyItem = ({ id, title, companyTitle, companyImageUrl, views, createdA
                 </CardFooter>
                 {
                     session?.user?.role === "admin" && (
-                        <Button variant="ghost" onClick={onClick} className="absolute top-4 right-4 text-red-500 hover:bg-red-200 hover:text-red-500">
+                        <Button variant="ghost" onClick={onClick} className="absolute top-12 right-3 text-red-500 hover:bg-red-200 hover:text-red-500">
                             <Trash />
                         </Button>
                     )
                 }
                 {
                     salary && (
-                        <span className={cn("flex items-center gap-1 absolute top-4 right-6 text-lg text-muted-foreground font-light", session?.user?.role === "admin" && "top-10 right-7")}>
+                        <span className={cn("flex items-center gap-1 absolute top-4 right-6 text-lg text-muted-foreground font-light")}>
                             {/* <Eye size={15} /> */}
                             ₼
                         </span>

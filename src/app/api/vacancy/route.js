@@ -32,7 +32,12 @@ export async function GET(request) {
         if (types) filters.type = { $in: types.split(",") };
         if (education) filters.education = { $in: education.split(",") };
         if (experience) filters.experience = { $in: experience.split(",") };
-        if (search) filters.title = { $regex: search, $options: "i" };
+        if (search) {
+            filters.$or = [
+                { title: { $regex: search, $options: "i" } },
+                { description: { $regex: search, $options: "i" } }
+            ]
+        }
 
         console.log(filters)
 

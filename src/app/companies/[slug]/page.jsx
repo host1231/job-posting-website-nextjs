@@ -16,26 +16,22 @@ const CompanyAbout = () => {
     const { data, error, isLoading } = useGetCompaniesBySlugQuery(slug);
 
     return (
-        <section className="my-10">
+        <section className="py-5 md:py-10">
             <div className="container">
                 <CompanyHeader data={data?.company} totalVacancies={data?.totalVacancies} isLoading={isLoading} />
-                <div className="my-6">
-                    {
-                        !isLoading ? (
+                {
+                    !isLoading ? (
+                        <div className="my-6">
                             <h4 className="text-xl lg:text-2xl font-semibold mb-3">Şirkət haqqında</h4>
-                        ) : (
-                            <Skeleton className="h-8 mb-3" />
-                        )
-                    }
-                    {
-                        !isLoading ? (
                             <p className="text-muted-foreground text-sm md:text-base">{data?.company?.description}</p>
-                        ) : (
+                        </div>
+                    ) : (
+                        <div className="my-6">
+                            <Skeleton className="h-8 mb-3" />
                             <Skeleton className="h-30" />
-                        )
-                    }
-
-                </div>
+                        </div>
+                    )
+                }
             </div>
         </section>
     )

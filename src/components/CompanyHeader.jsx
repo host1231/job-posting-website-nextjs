@@ -33,12 +33,12 @@ const CompanyHeader = ({ data, totalVacancies, isLoading, withoutBtn }) => {
                                 }
                             </div>
                         ) : (
-                            <Skeleton className=" w-[80%] h-9 mb-6" />
+                            <Skeleton className="mx-auto md:mx-0 w-[80%] h-9 mb-6" />
                         )
                     }
                     {
                         !isLoading ? (
-                            <div className="flex flex-row gap-10 flex-wrap justify-center md:justify-start md:gap-15">
+                            <div className="flex flex-row gap-10 flex-wrap justify-center lg:justify-start lg:gap-15">
                                 <div className="flex items-center gap-4">
                                     <MapPinned className="text-primary" />
                                     <div className="lg:text-center">
@@ -62,7 +62,7 @@ const CompanyHeader = ({ data, totalVacancies, isLoading, withoutBtn }) => {
                                 </div>
                             </div>
                         ) : (
-                            <Skeleton className="w-[40%] h-12" />
+                            <Skeleton className="w-full md:w-[40%] h-12" />
                         )
                     }
                     {

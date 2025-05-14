@@ -3,6 +3,7 @@ import { Avatar, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
+import { educations, experiences, types } from '@/constant/data';
 import { getFormattedDate } from '@/lib/formattedDate';
 import { fromSlug } from '@/lib/slug';
 import { useAddVacancyViewMutation, useDeleteVacancyMutation, useGetVacanciesBySlugQuery } from '@/services/vacancy';
@@ -38,7 +39,7 @@ const VacancyAbout = () => {
     }
 
     return (
-        <section className="py-10">
+        <section className="py-5 md:py-10">
             <div className="container">
                 <div className="flex flex-col lg:flex-row gap-6">
                     <div className="w-full h-min">
@@ -46,37 +47,37 @@ const VacancyAbout = () => {
                             {
                                 loading
                                     ? (
-                                        <div className="flex items-center gap-6">
-                                            <Skeleton className="w-[140px] h-[140px] rounded-full" />
+                                        <div className="flex items-center gap-6 w-full">
+                                            <Skeleton className="w-20 h-20 md:w-[140px] md:h-[140px] rounded-full" />
                                             <div className="flex-1">
-                                                <Skeleton className="w-full h-9 mb-1" />
-                                                <Skeleton className="w-[400px] h-[19px]" />
+                                                <Skeleton className="h-9 mb-1" />
+                                                <Skeleton className="h-[19px]" />
                                                 <div className="flex gap-2 mt-2">
-                                                    <Skeleton className="w-[70px] h-6" />
-                                                    <Skeleton className="w-[70px] h-6" />
-                                                    <Skeleton className="w-[70px] h-6" />
+                                                    <Skeleton className="w-[20%] h-6" />
+                                                    <Skeleton className="w-[20%] h-6" />
+                                                    <Skeleton className="w-[20%] h-6" />
                                                 </div>
                                             </div>
                                         </div>
                                     ) : (
-                                        <div className="flex items-center gap-6">
+                                        <div className="flex items-center gap-3 md:gap-6">
                                             <Avatar className="w-20 h-20 lg:w-35 lg:h-35">
                                                 <AvatarImage src={vacancy?.company?.imageUrl} />
                                             </Avatar>
                                             <div>
                                                 <h2 className="title mb-1">{vacancy?.title}</h2>
                                                 <div className="flex flex-col lg:flex-row text-muted-foreground lg:items-center lg:gap-2">
-                                                    <span className="flex gap-1 items-center">
+                                                    <span className="flex gap-1 items-center text-xs md:text-base">
                                                         {/* <Building width={16} /> */}
                                                         {vacancy?.company?.title}
                                                     </span>
-                                                    <span className="hidden lg:block w-2 h-2 bg-neutral-400 rounded-full"></span>
-                                                    <span className="flex gap-1 items-center">
+                                                    <span className="hidden lg:block w-2 h-2 bg-muted-foreground rounded-full"></span>
+                                                    <span className="flex gap-1 items-center text-xs md:text-base">
                                                         {/* <LayoutList width={16} /> */}
                                                         {vacancy?.categories[0]?.title}
                                                     </span>
                                                 </div>
-                                                <div className="flex gap-4 text-muted-foreground mt-2 font-medium">
+                                                <div className="flex text-xs gap-2 md:text-base md:gap-4 text-muted-foreground mt-2 font-medium">
                                                     <span className="flex items-center gap-1">
                                                         <Clock size={18} />
                                                         {getFormattedDate(vacancy?.createdAt)}
@@ -186,15 +187,21 @@ const VacancyAbout = () => {
 
                                             <p className="font-medium">
                                                 <span className="block text-sm text-muted-foreground font-light mb-1">Vakansiya növü</span>
-                                                {vacancy?.type}
-                                            </p>
-                                            <p className="font-medium">
-                                                <span className="block text-sm text-muted-foreground font-light mb-1">Təcrübə</span>
-                                                {vacancy?.experience}
+                                                {
+                                                    types.map(item => vacancy?.type == item.value && item.title)
+                                                }
                                             </p>
                                             <p className="font-medium">
                                                 <span className="block text-sm text-muted-foreground font-light mb-1">Təhsil</span>
-                                                {vacancy?.education}
+                                                {
+                                                    educations.map(item => vacancy?.education === item.value && item.title)
+                                                }
+                                            </p>
+                                            <p className="font-medium">
+                                                <span className="block text-sm text-muted-foreground font-light mb-1">Təcrübə</span>
+                                                {
+                                                    experiences.map(item => vacancy?.experience === item.value && item.title)
+                                                }
                                             </p>
                                         </div>
                                     )

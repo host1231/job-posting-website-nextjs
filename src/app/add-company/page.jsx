@@ -51,7 +51,7 @@ const AddCompany = () => {
 
 
   return (
-    <section className="py-10 bg-neutral-50">
+    <section className="py-5 md:py-10">
       <div className='container'>
         <Card className="max-w-[900px] mx-auto default-card">
           <CardHeader>

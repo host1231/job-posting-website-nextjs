@@ -19,17 +19,19 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-        <ReduxProvider>
-          <AuthProvider>
-            <body
-              className={`${inter.variable} antialiased`}
-            >
-              <HeaderWrapper />
-              <main>{children}</main>
-              <Toaster />
-            </body>
-          </AuthProvider>
-        </ReduxProvider>
+       <ThemeProvider>
+          <ReduxProvider>
+            <AuthProvider>
+              <body
+                className={`${inter.variable} antialiased`}
+              >
+                <HeaderWrapper />
+                <main>{children}</main>
+                <Toaster />
+              </body>
+            </AuthProvider>
+          </ReduxProvider>
+          </ThemeProvider>
     </html>
   );
 }

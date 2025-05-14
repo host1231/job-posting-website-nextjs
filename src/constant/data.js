@@ -1,4 +1,12 @@
-export const type = [
+import { BriefcaseBusiness, Building, Search } from "lucide-react";
+
+export const menuItems = [
+    { id: 1, href: "/", label: "Vakansiyalar",  icon: <BriefcaseBusiness />},
+    { id: 2, href: "/companies", label: "Şirkətlər", icon: <Building /> },
+    { id: 3, href: "/categories", label: "Kateqoriyalar", icon: <Search />},
+]
+
+export const types = [
     {
         value: "Full-time", title: "Tam ştat"
     },
@@ -19,7 +27,7 @@ export const type = [
     },
 ];
 
-export const education = [
+export const educations = [
     {
         value: "High", title: "Ali"
     },
@@ -31,7 +39,7 @@ export const education = [
     },
 ];
 
-export const experience = [
+export const experiences = [
     {
         value: "No experience", title: "Təcrubəsiz"
     },

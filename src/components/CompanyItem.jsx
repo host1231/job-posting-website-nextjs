@@ -30,7 +30,7 @@ const CompanyItem = ({ logo, title, slug, description, onClick, vacancyCount }) 
                 </CardHeader>
                 {
                     session?.user?.role === "admin" && (
-                        <Button variant="ghost" onClick={onClick} className="absolute top-14 right-4 text-red-500 hover:bg-red-200 hover:text-red-500">
+                        <Button variant="ghost" onClick={onClick} className="absolute top-14 right-6 text-red-500 hover:bg-red-200 hover:text-red-500">
                             <Trash />
                         </Button>
                     )

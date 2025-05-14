@@ -10,9 +10,10 @@ import VacancyItem from "./VacancyItem";
 import VacancyItemSkeleton from "./VacancyItemSkeleton";
 import PaginationWrapper from "./PaginationWrapper";
 import { getFormattedDate } from "@/lib/formattedDate";
-import { SearchX } from "lucide-react";
-import { education, experience, type } from "@/constant/data";
+import { SearchX, Trash2 } from "lucide-react";
+import { educations, experiences, types } from "@/constant/data";
 import { toast } from "sonner";
+import { Button } from "./ui/button";
 
 
 const HomeClient = () => {
@@ -95,10 +96,21 @@ const HomeClient = () => {
         }
     }
 
+    const resetFilter = () => {
+        setSearch("");
+        setCategory([]);
+        setTypeF([]);
+        setEducationF([]);
+        setExperienceF([]);
+
+        router.push("/");
+    }
+
+
     return (
-        <section className="my-10">
+        <section className="py-5 md:py-10">
             <div className="container">
-                <div className="py-10 px-5 shadow-md my-6 rounded-md border bg-white">
+                <div className="py-10 px-5 shadow-md my-6 rounded-md border bg-background">
                     <div className="">
                         <h2 className="title mb-1">Vakansiyalar</h2>
                         <p className="text-muted-foreground  mb-3 text-sm">{`${start} - ${end} / ${data?.total ? data?.total : "1"} nəticə göstərili`}r</p>
@@ -106,19 +118,23 @@ const HomeClient = () => {
                             <Input placeholder="Vakansiya adı və ya açar söz" value={search} onChange={(e) => setSearch(e.target.value)} />
                             <DropdownMenuCheckbox title="Kateqoriyanı seçin" data={categories ? categories : []} value={category} onChange={setCategory} size="w-80" />
                         </div>
-                        <div className="hidden md:flex gap-3 my-3 overflow-x-auto">
-                            <DropdownMenuCheckbox title="Vakansiya növü" data={type} value={typeF} onChange={setTypeF} />
-                            <DropdownMenuCheckbox title="Təcrübə" data={education} value={educationF} onChange={setEducationF} />
-                            <DropdownMenuCheckbox title="Təhsil" data={experience} value={experienceF} onChange={setExperienceF} />
+                        <div className="hidden md:flex gap-3 my-3 overflow-x-auto items-center">
+                            <DropdownMenuCheckbox title="Vakansiya növü" data={types} value={typeF} onChange={setTypeF} />
+                            <DropdownMenuCheckbox title="Təcrübə" data={educations} value={educationF} onChange={setEducationF} />
+                            <DropdownMenuCheckbox title="Təhsil" data={experiences} value={experienceF} onChange={setExperienceF} />
+                            <Button variant="destructive" className="ml-8" onClick={resetFilter}>
+                                <Trash2 />
+                                Sıfırla
+                            </Button>
                         </div>
                         <div className="block md:hidden">
                             <Input placeholder="Vakansiya adı və ya açar söz" value={search} onChange={(e) => setSearch(e.target.value)} />
                         </div>
-                        <div className="flex gap-2 flex-wrap">
-                            {/* <BadgeList data={category} setData={setCategory} options={categories} /> */}
-                            <BadgeList data={typeF} setData={setTypeF} options={type} />
-                            <BadgeList data={educationF} setData={setEducationF} options={education} />
-                            <BadgeList data={experienceF} setData={setExperienceF} options={experience} />
+                        <div className="flex gap-2 flex-wrap mt-3 overflow-x-auto">
+                            <BadgeList data={category} setData={setCategory} options={categories} />
+                            <BadgeList data={typeF} setData={setTypeF} options={types} />
+                            <BadgeList data={educationF} setData={setEducationF} options={educations} />
+                            <BadgeList data={experienceF} setData={setExperienceF} options={experiences} />
                         </div>
                     </div>
                 </div>

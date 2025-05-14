@@ -108,7 +108,7 @@ const AddVacancy = () => {
     }
 
     return (
-        <section className="py-10">
+        <section className="py-5 md:py-10">
             <div className="container">
                 <Card className="default-card max-w-[1100px] mx-auto">
                     <CardHeader>

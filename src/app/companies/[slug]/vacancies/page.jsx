@@ -17,7 +17,7 @@ const CompanyVacancies = () => {
     console.log(data)
 
     return (
-        <section className="my-10">
+        <section className="py-5 md:py-10">
             <div className="container">
                 <CompanyHeader data={data?.company} withoutBtn />
                 <div className="my-6">
