@@ -6,14 +6,14 @@ import { useEffect, useState } from "react";
 import { Input } from "./ui/input";
 import DropdownMenuCheckbox from "./DropdownMenuCheckbox";
 import BadgeList from "./BadgeList";
-import VacancyItem from "./VacancyItem";
-import VacancyItemSkeleton from "./VacancyItemSkeleton";
 import PaginationWrapper from "./PaginationWrapper";
 import { getFormattedDate } from "@/lib/formattedDate";
 import { SearchX, Trash2 } from "lucide-react";
 import { educations, experiences, types } from "@/constant/data";
 import { toast } from "sonner";
 import { Button } from "./ui/button";
+import VacancyItem from "./cards/VacancyItem";
+import VacancyItemSkeleton from "./cards/skeletons/VacancyItemSkeleton";
 
 
 const HomeClient = () => {

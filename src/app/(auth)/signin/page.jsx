@@ -1,6 +1,4 @@
 "use client"
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import {
     Form,
     FormControl,
@@ -12,13 +10,15 @@ import {
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod"
 import Link from "next/link";
-import InputPassword from "@/components/InputPassword";
 import { signinSchema } from "@/lib/helper";
 import { useState } from "react";
 import {signIn} from "next-auth/react"
 import { toast } from "sonner";
 import { Loader } from "lucide-react";
 import { useRouter } from "next/navigation";
+import InputPassword from "@/components/inputs/InputPassword";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 
 
 const SignIn = () => {
@@ -59,8 +59,8 @@ const SignIn = () => {
     }
     return (
         <div className="h-full flex flex-col justify-center items-center">
-            <div className="max-w-lg w-full shadow-md px-5 md:px-10 py-6 border rounded-md my-10">
-                <h4 className="text-2xl md:text-4xl font-bold mb-10 text-center text-amber-500">Xoş gəlmisən!</h4>
+            <div className="max-w-lg w-full shadow-md px-5 md:px-10 py-6 border rounded-md my-10 bg-background">
+                <h4 className="text-2xl md:text-4xl font-bold mb-10 text-center text-primary">Xoş gəlmisən!</h4>
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
                         <FormField
@@ -97,7 +97,7 @@ const SignIn = () => {
                         </Button>
                         <p className="text-center">
                             Hesabın yoxdursa,
-                            <Link href="/signup" className="text-amber-500 ml-1">
+                            <Link href="/signup" className="text-primary ml-1">
                                 qeydiyyatdan keç
                             </Link>
                         </p>

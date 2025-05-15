@@ -1,20 +1,13 @@
 "use client"
 
-import CategoryItem from '@/components/CategoryItem'
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
-import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
-import { ArrowBigRightDash, ArrowRight, BadgePlus, Plus, Trash } from 'lucide-react'
+import CategoryItem from '@/components/cards/CategoryItem'
+import { ArrowRight } from 'lucide-react'
 import React, { useEffect, useState } from 'react'
 import { z } from "zod"
 import { useForm } from "react-hook-form";
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
-import { Input } from '@/components/ui/input'
-import InputFile from '@/components/InputFile'
 import Link from 'next/link'
-import CategoryItemSkeleton from '@/components/CategoryItemSkeleton'
+import CategoryItemSkeleton from '@/components/cards/skeletons/CategoryItemSkeleton'
 import { toast } from 'sonner'
 import { useAddCategoryMutation, useDeleteCategoryMutation, useGetCategoriesQuery } from '@/services/vacancy'
 import AddCategory from '@/components/AddCategory'

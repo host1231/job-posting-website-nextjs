@@ -18,14 +18,14 @@ import {
 import NavMenu from "./NavMenu";
 import { signOut, useSession } from "next-auth/react";
 import MobileMenu from "./MobileMenu";
-import { ModeToggle } from "./ModeToggleBtn";
+import { ModeToggle } from "./ModeToggle";
 
 const Header = () => {
     const { data: session } = useSession();
 
     console.log(session)
     return (
-        <header className="header md:shadow-sm py-3 fixed top-0 right-0 w-full bg-white z-60">
+        <header className="header py-3 fixed top-0 right-0 w-full bg-background z-40 border-b">
             <div className="container">
                 <div className="header__inner flex justify-between items-center">
                     <div className="logo w-35 md:w-50">
@@ -92,7 +92,7 @@ const Header = () => {
                                     </Link>
                                 )
                         }
-                        {/* <ModeToggle /> */}
+                        <ModeToggle />
                     </div>
                 </div>
             </div>

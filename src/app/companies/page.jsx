@@ -1,8 +1,6 @@
 "use client"
-import CategoryItem from '@/components/CategoryItem';
-import CategoryItemSkeleton from '@/components/CategoryItemSkeleton';
-import CompanyItem from '@/components/CompanyItem';
-import CompanyItemSkeleton from '@/components/CompanyItemSkeleton';
+import CompanyItem from '@/components/cards/CompanyItem';
+import CompanyItemSkeleton from '@/components/cards/skeletons/CompanyItemSkeleton';
 import { useDeleteCompanyMutation, useGetCompaniesQuery } from '@/services/vacancy';
 import React, { useEffect, useState } from 'react'
 import { toast } from 'sonner';

@@ -43,7 +43,7 @@ const VacancyAbout = () => {
             <div className="container">
                 <div className="flex flex-col lg:flex-row gap-6">
                     <div className="w-full h-min">
-                        <div className="border rounded-md shadow-md p-6 bg-white">
+                        <div className="border rounded-md shadow-md p-6 bg-background">
                             {
                                 loading
                                     ? (
@@ -131,7 +131,7 @@ const VacancyAbout = () => {
 
 
                     </div>
-                    <div className="border rounded-md shadow-md p-6 lg:w-sm h-min lg:sticky top-30 right-0 bg-white">
+                    <div className="border rounded-md shadow-md p-6 lg:w-sm h-min lg:sticky top-30 right-0 bg-background">
                         {
                             loading
                                 ? <Skeleton className="w-full h-7" />

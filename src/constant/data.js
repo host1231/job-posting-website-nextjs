@@ -1,9 +1,9 @@
 import { BriefcaseBusiness, Building, Search } from "lucide-react";
 
 export const menuItems = [
-    { id: 1, href: "/", label: "Vakansiyalar",  icon: <BriefcaseBusiness />},
+    { id: 1, href: "/", label: "Vakansiyalar",  icon: <Search />},
     { id: 2, href: "/companies", label: "Şirkətlər", icon: <Building /> },
-    { id: 3, href: "/categories", label: "Kateqoriyalar", icon: <Search />},
+    { id: 3, href: "/categories", label: "Kateqoriyalar", icon: <BriefcaseBusiness /> },
 ]
 
 export const types = [

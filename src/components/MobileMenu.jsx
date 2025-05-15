@@ -6,11 +6,12 @@ import { Drawer } from 'vaul';
 import { DrawerDescription } from './ui/drawer';
 import { useState } from 'react';
 import { menuItems } from '@/constant/data';
-import { LayoutList, User, X } from 'lucide-react';
+import { LayoutList, LogOut, User, X } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import { Button } from './ui/button';
-import { useSession } from 'next-auth/react';
+import { signOut, useSession } from 'next-auth/react';
+import { ModeToggle } from './ModeToggle';
 
 const MobileMenu = () => {
   const [open, setOpen] = useState(false);
@@ -23,7 +24,7 @@ const MobileMenu = () => {
   }
 
   return (
-    <Drawer.Root open={open} onOpenChange={setOpen} direction="top">
+    <Drawer.Root open={open} onOpenChange={setOpen} direction="left">
 
       <Drawer.Trigger className="relative flex h-10 flex-shrink-0 items-center justify-center gap-2 overflow-hidden rounded-full px-3 transition-all border text-muted-foreground">
         <LayoutList />
@@ -31,31 +32,16 @@ const MobileMenu = () => {
       <Drawer.Portal>
         <Drawer.Overlay className="fixed inset-0 bg-black/40 rounded-none" />
         <Drawer.Content
-          className="left-0 top-16 bottom-0 fixed z-50 outline-none w-full flex"
+          className="left-0 top-[65.78px] bottom-0 fixed z-39 outline-none w-[280px] flex border-r"
           style={{ '--initial-transform': 'calc(100% + 8px)' }}
         >
-          <div className="bg-white w-full h-full grow p-5 flex flex-col ">
-            {/* <div className="logo mb-10">
-              <Link href="/">
-                <Drawer.Title>
-                  <Image
-                    src="https://vuxz9tznczckbg5g.public.blob.vercel-storage.com/Logo-lo6v2oUeBqG9OcMtA2GWbBAl2zQBC7.svg"
-                    alt="Logo"
-                    width={0}
-                    height={0}
-                    style={{ width: "140px", height: "auto" }}
-                    priority
-                  />
-                </Drawer.Title>
-              </Link>
-            </div> */}
+          <div className="bg-background w-full h-full grow p-5 flex flex-col ">
             <Drawer.Title className="hidden">Test</Drawer.Title>
             <DrawerDescription className="mb-2 font-light">Sizin HiJobsAz</DrawerDescription>
 
-            <nav className="flex flex-col">
+            <nav className="flex flex-col gap-2">
               {
                 menuItems.map(menuItem => {
-                  const Icon = menuItem.icon;
                   const isActive = pathname === menuItem.href;
 
                   return (
@@ -63,10 +49,9 @@ const MobileMenu = () => {
                       onClick={handleLinkClick}
                       href={menuItem.href}
                       className={cn(
-                        "flex items-center gap-2 px-3 py-2 rounded-md text-sm font-semibold  hover:text-primary",
-                        isActive && "bg-primary text-white"
+                        "flex items-center gap-3 px-3 py-2 rounded-md text-sm font-semibold  hover:text-primary",
+                        isActive && "bg-primary text-background"
                       )}>
-                      {/* <Search size={14} /> */}
                       {menuItem.icon}
                       {menuItem.label}
                     </Link>
@@ -75,10 +60,10 @@ const MobileMenu = () => {
               }
             </nav>
             <div className="border-b my-6"></div>
-            <div>
+            <div className="flex justify-between items-center">
               {
                 session?.user ? (
-                  <h6>Salam, {session.user.name}</h6>
+                  <h6 className="font-medium">Salam, {session.user.name}</h6>
                 ) : (
                   <Link variant={"outline"} href="/signin">
                     <Button variant={"outline"} size={"lg"}>
@@ -88,11 +73,19 @@ const MobileMenu = () => {
                   </Link>
                 )
               }
+              <ModeToggle />
+            </div>
+            <div className="my-6">
+              {
+                session?.user && (
+                  <Button className="w-full" variant="destructive" onClick={() => signOut({ callbackUrl: "/" })}>
+                    <LogOut />
+                    Çıxış
+                  </Button>
+                )
+              }
             </div>
           </div>
-          <Drawer.Close>
-            <X className="absolute z-200 top-0 right-6 text-muted-foreground" />
-          </Drawer.Close>
         </Drawer.Content>
       </Drawer.Portal>
     </Drawer.Root>

@@ -1,5 +1,5 @@
 "use client"
-import InputFile from '@/components/InputFile'
+import InputFile from '@/components/inputs/InputFile'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
@@ -53,7 +53,7 @@ const AddCompany = () => {
   return (
     <section className="py-5 md:py-10">
       <div className='container'>
-        <Card className="max-w-[900px] mx-auto default-card">
+        <Card className="max-w-[900px] mx-auto default-card bg-background">
           <CardHeader>
             <CardTitle>Добавьте информацию о компании</CardTitle>
             <CardDescription>Для добавление вакансии, сначала нужно добавить информацию о компании</CardDescription>

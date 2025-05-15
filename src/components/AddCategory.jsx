@@ -4,15 +4,15 @@ import { Card, CardContent } from './ui/card'
 import { BadgePlus } from 'lucide-react'
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from './ui/form'
 import { Button } from './ui/button'
+import InputFile from './inputs/InputFile'
 import { Input } from './ui/input'
-import InputFile from './InputFile'
 
 const AddCategory = ({ open, setOpen, form, onSubmit }) => {
     return (
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger>
                 <Card className="w-full h-[207.6px] cursor-pointer">
-                    <CardContent className="flex justify-center items-center h-full text-neutral-300 hover:text-amber-500 ">
+                    <CardContent className="flex justify-center items-center h-full text-neutral-300 hover:text-primary ">
                         <BadgePlus size={70} />
                     </CardContent>
                 </Card>

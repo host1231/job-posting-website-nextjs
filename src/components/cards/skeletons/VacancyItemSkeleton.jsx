@@ -1,6 +1,5 @@
-import React from 'react'
-import { Card, CardFooter, CardHeader } from './ui/card'
-import { Skeleton } from './ui/skeleton'
+import { Card, CardFooter, CardHeader } from "@/components/ui/card"
+import { Skeleton } from "@/components/ui/skeleton"
 
 const VacancyItemSkeleton = () => {
     return (

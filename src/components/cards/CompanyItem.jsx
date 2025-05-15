@@ -1,11 +1,11 @@
 import React from 'react'
-import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from './ui/card'
-import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar'
 import Link from 'next/link'
-import { Button } from './ui/button'
 import { Trash } from 'lucide-react'
 import { useSession } from 'next-auth/react'
-import { Badge } from './ui/badge'
+import { Card, CardDescription, CardHeader, CardTitle } from '../ui/card'
+import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
+import { Badge } from '../ui/badge'
+import { Button } from '../ui/button'
 
 const CompanyItem = ({ logo, title, slug, description, onClick, vacancyCount }) => {
     const { data: session } = useSession();
@@ -13,11 +13,11 @@ const CompanyItem = ({ logo, title, slug, description, onClick, vacancyCount }) 
     return (
         <Link href={`/companies/${slug}`}>
             <Card className="w-full h-full relative">
-                <CardHeader >
+                <CardHeader>
                     <div className="flex justify-between w-full">
                         <Avatar className="w-14 h-14 md:w-20 md:h-20 rounded-full border mb-3">
                             <AvatarImage src={logo ? logo : "/vector.svg"} alt="@shadcn" />
-                            <AvatarFallback>CN</AvatarFallback>
+                            {/* <AvatarFallback>CN</AvatarFallback> */}
                         </Avatar>
                         <Badge className="h-min text-xs">{vacancyCount} vakansiya</Badge>
                     </div>

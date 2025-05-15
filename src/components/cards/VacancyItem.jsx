@@ -1,14 +1,14 @@
 "use client"
 
 import React from 'react'
-import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from './ui/card'
-import { Avatar, AvatarImage } from './ui/avatar'
+import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from '../ui/card'
 import { Clock, Eye, Trash } from 'lucide-react'
 import Link from 'next/link'
 import { toSlug } from '@/lib/slug'
-import { Button } from './ui/button'
+import { Button } from '../ui/button'
 import { useSession } from 'next-auth/react'
 import { cn } from '@/lib/utils'
+import { Avatar, AvatarImage } from '../ui/avatar'
 
 const VacancyItem = ({ id, title, companyTitle, companyImageUrl, views, createdAt, slug, onClick, salary }) => {
     const { data: session } = useSession();

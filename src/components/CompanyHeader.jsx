@@ -6,7 +6,7 @@ import { Button } from './ui/button'
 
 const CompanyHeader = ({ data, totalVacancies, isLoading, withoutBtn }) => {
     return (
-        <div className="border p-6 shadow-md bg-white rounded-md">
+        <div className="border p-6 shadow-md bg-background rounded-md">
             <div className="flex flex-col lg:flex-row items-center gap-6 relative w-full">
                 {
                     !isLoading ? (
