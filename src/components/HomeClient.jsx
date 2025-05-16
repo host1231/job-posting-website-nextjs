@@ -8,12 +8,14 @@ import DropdownMenuCheckbox from "./DropdownMenuCheckbox";
 import BadgeList from "./BadgeList";
 import PaginationWrapper from "./PaginationWrapper";
 import { getFormattedDate } from "@/lib/formattedDate";
-import { SearchX, Trash2 } from "lucide-react";
+import { SearchCheck, SearchX, SlidersHorizontal, Trash2 } from "lucide-react";
 import { educations, experiences, types } from "@/constant/data";
 import { toast } from "sonner";
 import { Button } from "./ui/button";
 import VacancyItem from "./cards/VacancyItem";
 import VacancyItemSkeleton from "./cards/skeletons/VacancyItemSkeleton";
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "./ui/dialog";
+import CheckboxMenuForm from "./CheckboxMenuForm";
 
 
 const HomeClient = () => {
@@ -27,6 +29,13 @@ const HomeClient = () => {
     const [search, setSearch] = useState("");
     const [debouncedSearch, setDebouncedSearch] = useState("");
     const [page, setPage] = useState(1);
+
+    const [mobileCategory, setMobileCategory] = useState([]);
+    const [mobileTypeF, setMobileTypeF] = useState([]);
+    const [mobileEducationF, setMobileEducationF] = useState([]);
+    const [mobileExperienceF, setMobileExperienceF] = useState([]);
+
+    const [open, setOpen] = useState(false);
 
 
     const { data, error, isLoading, isFetching } = useGetVacanciesQuery({
@@ -45,13 +54,40 @@ const HomeClient = () => {
     const start = (page - 1) * 20 + 1;
     const end = start + (data?.vacancies?.length || 0) - 1;
 
+
     useEffect(() => {
-        setCategory(searchParams.get("category")?.split(",") || []);
-        setTypeF(searchParams.get("types")?.split(",") || []);
-        setEducationF(searchParams.get("education")?.split(",") || []);
-        setExperienceF(searchParams.get("experience")?.split(",") || []);
+        const c = searchParams.get("category")?.split(",") || [];
+        const t = searchParams.get("types")?.split(",") || [];
+        const e = searchParams.get("education")?.split(",") || [];
+        const ex = searchParams.get("experience")?.split(",") || [];
+
+        setCategory(c);
+        setMobileCategory(c);
+
+        setTypeF(t);
+        setMobileTypeF(t);
+
+        setEducationF(e);
+        setMobileEducationF(e);
+
+        setExperienceF(ex);
+        setMobileExperienceF(ex);
+
         setSearch(searchParams.get("search") || "");
+
+        setPage(1);
     }, []);
+
+    const applyFilter = () => {
+        setCategory(mobileCategory);
+        setTypeF(mobileTypeF);
+        setEducationF(mobileEducationF);
+        setExperienceF(mobileExperienceF);
+
+        setPage(1);
+
+        setOpen(false);
+    }
 
     useEffect(() => {
         const params = new URLSearchParams();
@@ -106,6 +142,17 @@ const HomeClient = () => {
         router.push("/");
     }
 
+    const resetMobileFilter = () => {
+        setMobileCategory([]);
+        setMobileTypeF([]);
+        setMobileEducationF([]);
+        setMobileExperienceF([]);
+
+        router.push("/");
+
+        setOpen(false);
+    }
+
 
     return (
         <section className="py-5 md:py-10">
@@ -127,10 +174,41 @@ const HomeClient = () => {
                                 Sıfırla
                             </Button>
                         </div>
-                        <div className="block md:hidden">
+                        <div className="flex flex-col justify-center gap-5  md:hidden">
                             <Input placeholder="Vakansiya adı və ya açar söz" value={search} onChange={(e) => setSearch(e.target.value)} />
+                            <Dialog open={open} onOpenChange={setOpen}>
+                                <DialogTrigger asChild>
+                                    <Button className="w-min mx-auto">
+                                        <SlidersHorizontal />
+                                        Filtr
+                                    </Button>
+                                </DialogTrigger>
+                                <DialogContent className="max-w-[440px] w-[90%]">
+                                    <DialogHeader>
+                                        <DialogTitle>Daha çox filter</DialogTitle>
+                                        <DialogDescription className="hidden">reste</DialogDescription>
+
+                                    </DialogHeader>
+                                    <div className="h-[60vh] overflow-y-auto">
+                                        <CheckboxMenuForm title="Kateqoriyanı seçin" data={categories} value={mobileCategory} onChange={setMobileCategory} />
+                                        <CheckboxMenuForm title="Vakansiya növü" data={types} value={mobileTypeF} onChange={setMobileTypeF} />
+                                        <CheckboxMenuForm title="Təcrübə" data={educations} value={mobileEducationF} onChange={setMobileEducationF} />
+                                        <CheckboxMenuForm title="Təhsil" data={experiences} value={mobileExperienceF} onChange={setMobileExperienceF} />
+                                    </div>
+                                    <DialogFooter>
+                                        <Button onClick={applyFilter}>
+                                            <SearchCheck />
+                                            Axtar
+                                        </Button>
+                                        <Button variant="outline" onClick={resetMobileFilter}>
+                                            <Trash2 />
+                                            Sıfırla
+                                        </Button>
+                                    </DialogFooter>
+                                </DialogContent>
+                            </Dialog>
                         </div>
-                        <div className="flex gap-2 flex-wrap mt-3 overflow-x-auto">
+                        <div className="hidden md:flex gap-2 flex-wrap mt-3 overflow-x-auto">
                             <BadgeList data={category} setData={setCategory} options={categories} />
                             <BadgeList data={typeF} setData={setTypeF} options={types} />
                             <BadgeList data={educationF} setData={setEducationF} options={educations} />

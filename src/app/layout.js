@@ -5,6 +5,7 @@ import { Toaster } from "@/components/ui/sonner";
 import AuthProvider from "@/components/providers/AuthProvider";
 import ReduxProvider from "@/components/providers/ReduxProvider";
 import { ThemeProvider } from "@/components/providers/theme-provider";
+import Head from "next/head";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -21,6 +22,9 @@ export default function RootLayout({ children }) {
     <html lang="en" suppressHydrationWarning>
       <ReduxProvider>
         <AuthProvider>
+          <Head>
+            <link rel="icon" href="https://vuxz9tznczckbg5g.public.blob.vercel-storage.com/Logo-lo6v2oUeBqG9OcMtA2GWbBAl2zQBC7.svg" />
+          </Head> 
           <body
             className={`${inter.variable} antialiased`}
           >

@@ -69,12 +69,20 @@ const Header = () => {
                                     <DropdownMenuContent className="mt-5 mr-15">
                                         <DropdownMenuLabel>Salam, {session.user.name}</DropdownMenuLabel>
                                         <DropdownMenuSeparator />
-                                        <DropdownMenuItem asChild variant="">
-                                            <Link href="/add-vacancy">Добавить вакансию</Link>
-                                        </DropdownMenuItem>
-                                        <DropdownMenuItem asChild variant="">
-                                            <Link href="/add-company">Добавить компанию</Link>
-                                        </DropdownMenuItem>
+                                        {
+                                            session?.user?.role === "admin" && (
+                                                <DropdownMenuItem asChild variant="">
+                                                    <Link href="/add-vacancy">Добавить вакансию</Link>
+                                                </DropdownMenuItem>
+                                            )
+                                        }
+                                        {
+                                            session?.user?.role === "admin" && (
+                                                <DropdownMenuItem asChild variant="">
+                                                    <Link href="/add-company">Добавить компанию</Link>
+                                                </DropdownMenuItem>
+                                            )
+                                        }
                                         <DropdownMenuSeparator />
                                         <DropdownMenuItem variant="destructive" onClick={() => signOut({ callbackUrl: "/" })}>
                                             <LogOut />
