@@ -62,16 +62,16 @@ const HomeClient = () => {
         const ex = searchParams.get("experience")?.split(",") || [];
 
         setCategory(c);
-        setMobileCategory(c);
+        // setMobileCategory(c);
 
         setTypeF(t);
-        setMobileTypeF(t);
+        // setMobileTypeF(t);
 
         setEducationF(e);
-        setMobileEducationF(e);
+        // setMobileEducationF(e);
 
         setExperienceF(ex);
-        setMobileExperienceF(ex);
+        // setMobileExperienceF(ex);
 
         setSearch(searchParams.get("search") || "");
 
@@ -86,7 +86,7 @@ const HomeClient = () => {
 
         setPage(1);
 
-        setOpen(false);
+        // setOpen(false)
     }
 
     useEffect(() => {
@@ -102,6 +102,8 @@ const HomeClient = () => {
         // console.log(params)
 
         router.push(`?${params.toString()}`);
+
+        setOpen(false);
     }, [category, typeF, educationF, experienceF, search, page]);
 
     useEffect(() => {
@@ -139,20 +141,13 @@ const HomeClient = () => {
         setEducationF([]);
         setExperienceF([]);
 
-        router.push("/");
-    }
-
-    const resetMobileFilter = () => {
         setMobileCategory([]);
         setMobileTypeF([]);
         setMobileEducationF([]);
         setMobileExperienceF([]);
 
         router.push("/");
-
-        setOpen(false);
     }
-
 
     return (
         <section className="py-5 md:py-10">
@@ -200,7 +195,7 @@ const HomeClient = () => {
                                             <SearchCheck />
                                             Axtar
                                         </Button>
-                                        <Button variant="outline" onClick={resetMobileFilter}>
+                                        <Button variant="outline" onClick={resetFilter}>
                                             <Trash2 />
                                             Sıfırla
                                         </Button>

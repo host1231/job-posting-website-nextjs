@@ -23,9 +23,10 @@ const CompanyItem = ({ logo, title, slug, description, onClick, vacancyCount }) 
                     </div>
                     <div>
                         <CardTitle className="line-clamp-1 mb-1">{title}</CardTitle>
-                        <CardDescription className="line-clamp-2 md:line-clamp-3">
+                        {/* <CardDescription className="line-clamp-2 md:line-clamp-3">
                             {description}
-                        </CardDescription>
+                        </CardDescription> */}
+                        <CardDescription className="line-clamp-2 md:line-clamp-3" dangerouslySetInnerHTML={{ __html: description || '' }} />
                     </div>
                 </CardHeader>
                 {

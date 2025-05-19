@@ -127,6 +127,13 @@
     @apply bg-[#161616];
   }
 
+  ul {
+    @apply list-disc pl-6
+  }
+
+  ol {
+    @apply list-decimal pl-6
+  }
 }
 
 .container {

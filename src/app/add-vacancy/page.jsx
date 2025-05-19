@@ -1,6 +1,7 @@
 "use client"
 import CustomSelect from '@/components/CustomSelect'
 import DropdownMenuCheckbox from '@/components/DropdownMenuCheckbox'
+import Tiptap from '@/components/Tiptap'
 import { Avatar, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
@@ -240,7 +241,8 @@ const AddVacancy = () => {
                                         <FormItem>
                                             <FormLabel>Описание</FormLabel>
                                             <FormControl>
-                                                <Textarea className="resize-none h-30" placeholder="Добавьте описание вакансии" {...field} />
+                                                <Tiptap value={field.name} onChange={field.onChange} placeholder="Добавьте описание вакансии" />
+                                                {/* <Textarea className="resize-none h-30" placeholder="Добавьте описание вакансии" {...field} /> */}
                                             </FormControl>
                                             <FormMessage />
                                         </FormItem>
@@ -253,7 +255,8 @@ const AddVacancy = () => {
                                         <FormItem>
                                             <FormLabel>Требование</FormLabel>
                                             <FormControl>
-                                                <Textarea className="resize-none h-30" placeholder="Добавьте требование вакансии" {...field} />
+                                                {/* <Textarea className="resize-none h-30" placeholder="Добавьте требование вакансии" {...field} /> */}
+                                                <Tiptap value={field.name} onChange={field.onChange} />
                                             </FormControl>
                                             <FormMessage />
                                         </FormItem>

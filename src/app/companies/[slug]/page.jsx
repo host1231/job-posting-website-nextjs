@@ -23,7 +23,7 @@ const CompanyAbout = () => {
                     !isLoading ? (
                         <div className="my-6">
                             <h4 className="text-xl lg:text-2xl font-semibold mb-3">Şirkət haqqında</h4>
-                            <p className="text-muted-foreground text-sm md:text-base">{data?.company?.description}</p>
+                            <div className="text-muted-foreground text-sm md:text-base" dangerouslySetInnerHTML={{ __html: data?.company?.description || '' }} />
                         </div>
                     ) : (
                         <div className="my-6">

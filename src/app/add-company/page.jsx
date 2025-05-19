@@ -1,5 +1,6 @@
 "use client"
 import InputFile from '@/components/inputs/InputFile'
+import Tiptap from '@/components/Tiptap'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
@@ -9,12 +10,14 @@ import { companySchema } from '@/lib/helper'
 import { useAddCompanyMutation } from '@/services/vacancy'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Loader, Loader2 } from 'lucide-react'
+import { useRouter } from 'next/navigation'
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 
 const AddCompany = () => {
   const [AddCompany, {isLoading}] = useAddCompanyMutation();
+  const router = useRouter();
 
   const form = useForm({
     resolver: zodResolver(companySchema),
@@ -42,6 +45,7 @@ const AddCompany = () => {
 
       const result = await AddCompany(formData).unwrap();
       toast.success(result?.msg);
+      router.push("/companies");
     } catch (error) {
       toast.error(error?.data?.msg);
     } finally {
@@ -135,7 +139,8 @@ const AddCompany = () => {
                     <FormItem>
                       <FormLabel>Краткое описание</FormLabel>
                       <FormControl>
-                        <Textarea className="resize-none h-30" placeholder="Добавьте описание компании" {...field} />
+                        {/* <Textarea className="resize-none h-30" placeholder="Добавьте описание компании" {...field} /> */}
+                        <Tiptap value={field.name} onChange={field.onChange} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
