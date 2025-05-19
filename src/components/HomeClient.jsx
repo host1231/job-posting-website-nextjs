@@ -16,6 +16,7 @@ import VacancyItem from "./cards/VacancyItem";
 import VacancyItemSkeleton from "./cards/skeletons/VacancyItemSkeleton";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "./ui/dialog";
 import CheckboxMenuForm from "./CheckboxMenuForm";
+import { ChartCustom } from "./ChartCustom";
 
 
 const HomeClient = () => {
@@ -152,6 +153,9 @@ const HomeClient = () => {
     return (
         <section className="py-5 md:py-10">
             <div className="container">
+                <div>
+                    {/* <ChartCustom /> */}
+                </div>
                 <div className="py-10 px-5 shadow-md my-6 rounded-md border bg-background">
                     <div className="">
                         <h2 className="title mb-1">Vakansiyalar</h2>
@@ -171,37 +175,44 @@ const HomeClient = () => {
                         </div>
                         <div className="flex flex-col justify-center gap-5  md:hidden">
                             <Input placeholder="Vakansiya adı və ya açar söz" value={search} onChange={(e) => setSearch(e.target.value)} />
-                            <Dialog open={open} onOpenChange={setOpen}>
-                                <DialogTrigger asChild>
-                                    <Button className="w-min mx-auto">
-                                        <SlidersHorizontal />
-                                        Filtr
-                                    </Button>
-                                </DialogTrigger>
-                                <DialogContent className="max-w-[440px] w-[90%]">
-                                    <DialogHeader>
-                                        <DialogTitle>Daha çox filter</DialogTitle>
-                                        <DialogDescription className="hidden">reste</DialogDescription>
+                            <div className="flex justify-center">
+                                <Dialog open={open} onOpenChange={setOpen}>
+                                    <DialogTrigger asChild>
+                                        <Button className="w-min">
+                                            <SlidersHorizontal />
+                                            Filtr
+                                        </Button>
+                                    </DialogTrigger>
+                                    <DialogContent className="max-w-[440px] w-[90%]">
+                                        <DialogHeader>
+                                            <DialogTitle>Daha çox filter</DialogTitle>
+                                            <DialogDescription className="hidden">reste</DialogDescription>
 
-                                    </DialogHeader>
-                                    <div className="h-[60vh] overflow-y-auto">
-                                        <CheckboxMenuForm title="Kateqoriyanı seçin" data={categories} value={mobileCategory} onChange={setMobileCategory} />
-                                        <CheckboxMenuForm title="Vakansiya növü" data={types} value={mobileTypeF} onChange={setMobileTypeF} />
-                                        <CheckboxMenuForm title="Təcrübə" data={educations} value={mobileEducationF} onChange={setMobileEducationF} />
-                                        <CheckboxMenuForm title="Təhsil" data={experiences} value={mobileExperienceF} onChange={setMobileExperienceF} />
-                                    </div>
-                                    <DialogFooter>
-                                        <Button onClick={applyFilter}>
-                                            <SearchCheck />
-                                            Axtar
-                                        </Button>
-                                        <Button variant="outline" onClick={resetFilter}>
-                                            <Trash2 />
-                                            Sıfırla
-                                        </Button>
-                                    </DialogFooter>
-                                </DialogContent>
-                            </Dialog>
+                                        </DialogHeader>
+                                        <div className="h-[60vh] overflow-y-auto">
+                                            <CheckboxMenuForm title="Kateqoriyanı seçin" data={categories} value={mobileCategory} onChange={setMobileCategory} />
+                                            <CheckboxMenuForm title="Vakansiya növü" data={types} value={mobileTypeF} onChange={setMobileTypeF} />
+                                            <CheckboxMenuForm title="Təcrübə" data={educations} value={mobileEducationF} onChange={setMobileEducationF} />
+                                            <CheckboxMenuForm title="Təhsil" data={experiences} value={mobileExperienceF} onChange={setMobileExperienceF} />
+                                        </div>
+                                        <DialogFooter>
+                                            <Button onClick={applyFilter}>
+                                                <SearchCheck />
+                                                Axtar
+                                            </Button>
+                                            {/* <Button variant="outline" onClick={resetFilter}>
+                                                <Trash2 />
+                                                Sıfırla
+                                            </Button> */}
+                                        </DialogFooter>
+                                    </DialogContent>
+                                </Dialog>
+                                <Button variant="destructive" className="ml-4" onClick={resetFilter}>
+                                    <Trash2 />
+                                    Sıfırla
+                                </Button>
+
+                            </div>
                         </div>
                         <div className="hidden md:flex gap-2 flex-wrap mt-3 overflow-x-auto">
                             <BadgeList data={category} setData={setCategory} options={categories} />
