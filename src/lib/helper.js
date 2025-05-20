@@ -47,7 +47,7 @@ export const companySchema = z.object({
     .refine(file => file instanceof File || file === undefined, {
       message: "Необходимо загрузить логотипа"
     }),
-  city: z
+  city: z 
     .string()
     .min(1, "Город обязателен")
     .max(50, "Название города слишком длинное"),
@@ -76,11 +76,7 @@ export const signupSchema = z.object({
   username: z
     .string()
     .min(3, { message: "Ad ən azı 3 simvol uzunluğunda olmalıdır" })
-    .max(20, { message: "Ad 20 simvoldan çox olmamalıdır" })
-    .regex(/^[a-zA-Z0-9_]+$/, {
-      message: "İstifadəçi adında yalnız hərflər, rəqəmlər və alt xətt ola bilər.",
-    }),
-
+    .max(20, { message: "Ad 20 simvoldan çox olmamalıdır" }),
   email: z
     .string()
     .email({ message: "Yanlış email formatı" }),

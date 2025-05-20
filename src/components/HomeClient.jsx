@@ -91,6 +91,8 @@ const HomeClient = () => {
 
     useEffect(() => {
         const params = new URLSearchParams();
+        setOpen(false);
+
 
         if (category.length) params.set("category", category.join(","));
         if (typeF.length) params.set("types", typeF.join(","));
@@ -103,7 +105,6 @@ const HomeClient = () => {
 
         router.push(`?${params.toString()}`);
 
-        setOpen(false);
     }, [category, typeF, educationF, experienceF, search, page]);
 
     useEffect(() => {
@@ -210,7 +211,7 @@ const HomeClient = () => {
 
                             </div>
                         </div>
-                        <div className="hidden md:flex gap-2 flex-wrap mt-3 overflow-x-auto">
+                        <div className="hidden md:flex flex-wrap  overflow-x-auto">
                             <BadgeList data={category} setData={setCategory} options={categories} />
                             <BadgeList data={typeF} setData={setTypeF} options={types} />
                             <BadgeList data={educationF} setData={setEducationF} options={educations} />

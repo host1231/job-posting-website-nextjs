@@ -6,7 +6,7 @@ import { Drawer } from 'vaul';
 import { DrawerDescription } from './ui/drawer';
 import { useState } from 'react';
 import { menuItems } from '@/constant/data';
-import { LayoutList, LogOut, User, X } from 'lucide-react';
+import { AlignLeft, LayoutList, LogOut, User, X } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import { Button } from './ui/button';
@@ -25,9 +25,10 @@ const MobileMenu = () => {
 
   return (
     <Drawer.Root open={open} onOpenChange={setOpen} direction="left">
-
-      <Drawer.Trigger className="relative flex h-10 flex-shrink-0 items-center justify-center gap-2 overflow-hidden rounded-full px-3 transition-all border text-muted-foreground">
-        <LayoutList />
+      <Drawer.Trigger asChild>
+        <Button>
+          <AlignLeft />
+        </Button>
       </Drawer.Trigger>
       <Drawer.Portal>
         <Drawer.Overlay className="fixed inset-0 bg-black/40 rounded-none" />
@@ -60,20 +61,19 @@ const MobileMenu = () => {
               }
             </nav>
             <div className="border-b my-6"></div>
-            <div className="flex justify-between items-center">
+            <div>
               {
                 session?.user ? (
                   <h6 className="font-medium">Salam, {session.user.name}</h6>
                 ) : (
                   <Link variant={"outline"} href="/signin">
-                    <Button variant={"outline"} size={"lg"}>
+                    <Button variant={"outline"} size={"lg"} className="w-full">
                       <User />
                       Giriş
                     </Button>
                   </Link>
                 )
               }
-              <ModeToggle />
             </div>
             <div className="my-6">
               {

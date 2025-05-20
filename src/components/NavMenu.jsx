@@ -8,7 +8,7 @@ import React from 'react'
 const NavMenu = () => {
     const pathname = usePathname();
     return (
-        <nav className="nav flex gap-5">
+        <nav className="nav flex gap-4">
             {
 
                 menuItems.map(menuItem => {

@@ -1,6 +1,6 @@
 "use client"
 import { Button } from "@/components/ui/button";
-import { BookText, Building, LogOut, User } from "lucide-react";
+import { BookText, Building, LogOut, PlusCircle, User, UserCheck } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -28,78 +28,82 @@ const Header = () => {
         <header className="header py-3 fixed top-0 right-0 w-full bg-background z-40 border-b">
             <div className="container">
                 <div className="header__inner flex justify-between items-center">
-                    <div className="logo w-35 md:w-50">
-                        <Link href="/">
-                            <Image 
-                                src="https://vuxz9tznczckbg5g.public.blob.vercel-storage.com/Logo-lo6v2oUeBqG9OcMtA2GWbBAl2zQBC7.svg" 
-                                alt="Logo" 
-                                width={0} 
-                                height={0}
-                                style={{width: "100%", height: "auto"}}
-                                priority 
-                            />
-                        </Link>
-                    </div>
-                    <div className="hidden md:block">
-                        <NavMenu />
-                    </div>
-                    <div className="block md:hidden">
+                    <div className="md:hidden">
                         <MobileMenu />
                     </div>
-                    <div className="hidden btns md:flex items-center gap-5">
-                        {
-                            session?.user?.role === "admin" && (
-                                <Link href="/add-vacancy">
-                                    <Button>
-                                        <BookText />
-                                        Добавить вакансию
-                                    </Button>
-                                </Link>
-                            )
-                        }
-                        {
-                            session?.user ? (
-                                <DropdownMenu>
-                                    <DropdownMenuTrigger asChild>
-                                        <Avatar className="w-10 h-10 cursor-pointer">
-                                            <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
-                                            {/* <AvatarFallback>{data?.user?.name}</AvatarFallback> */}
-                                        </Avatar>
-                                    </DropdownMenuTrigger>
-                                    <DropdownMenuContent className="mt-5 mr-15">
-                                        <DropdownMenuLabel>Salam, {session.user.name}</DropdownMenuLabel>
-                                        <DropdownMenuSeparator />
-                                        {
-                                            session?.user?.role === "admin" && (
-                                                <DropdownMenuItem asChild variant="">
-                                                    <Link href="/add-vacancy">Добавить вакансию</Link>
-                                                </DropdownMenuItem>
-                                            )
-                                        }
-                                        {
-                                            session?.user?.role === "admin" && (
-                                                <DropdownMenuItem asChild variant="">
-                                                    <Link href="/add-company">Добавить компанию</Link>
-                                                </DropdownMenuItem>
-                                            )
-                                        }
-                                        <DropdownMenuSeparator />
-                                        <DropdownMenuItem variant="destructive" onClick={() => signOut({ callbackUrl: "/" })}>
-                                            <LogOut />
-                                            Logout
-                                        </DropdownMenuItem>
-                                    </DropdownMenuContent>
-                                </DropdownMenu>
-                            ) :
-                                (
-                                    <Link variant={"outline"} href="/signin">
-                                        <Button variant={"outline"} size={"lg"}>
+                    <div className="flex items-center gap-8">
+                        <div className="logo w-35 md:w-50">
+                            <Link href="/">
+                                <Image
+                                    src="https://vuxz9tznczckbg5g.public.blob.vercel-storage.com/Logo-lo6v2oUeBqG9OcMtA2GWbBAl2zQBC7.svg"
+                                    alt="Logo"
+                                    width={0}
+                                    height={0}
+                                    className="w-full h-auto hover:scale-105 transition-all"
+                                    priority
+                                />
+                            </Link>
+                        </div>
+                        <div className="hidden md:block">
+                            <NavMenu />
+                        </div>
+                    </div>
+                    <div className="flex items-center gap-3">
+                        <div className="hidden md:block">
+                            {
+                                !session?.user ? (
+                                    <Link href="/signin" className="hidden md:inline">
+                                        <Button variant="outline">
                                             <User />
                                             Giriş
                                         </Button>
                                     </Link>
+                                ) : (
+                                    <DropdownMenu>
+                                        <DropdownMenuTrigger asChild>
+                                            <Button>
+                                                <UserCheck />
+                                                Mənim hesabım
+                                            </Button>
+                                        </DropdownMenuTrigger>
+                                        {
+                                            session?.user?.role === "admin" ? (
+                                                <DropdownMenuContent className="w-[153.88px]">
+                                                    <DropdownMenuLabel>Salam, {session?.user?.name}</DropdownMenuLabel>
+                                                    <DropdownMenuSeparator />
+                                                    <DropdownMenuItem asChild>
+                                                        <Link href="/add-vacancy" className="flex gap-2 items-center text-muted-foreground">
+                                                            <PlusCircle />
+                                                            Vakansiya
+                                                        </Link>
+                                                    </DropdownMenuItem>
+                                                    <DropdownMenuItem asChild>
+                                                        <Link href="/add-company" className="flex gap-2 items-center text-muted-foreground">
+                                                            <PlusCircle />
+                                                            Kompaniya
+                                                        </Link>
+                                                    </DropdownMenuItem>
+                                                    <DropdownMenuSeparator />
+                                                    <DropdownMenuItem variant="destructive"  onSelect={() => signOut({ callbackUrl: "/" })}>
+                                                        <LogOut />
+                                                        Çıxış
+                                                    </DropdownMenuItem>
+                                                </DropdownMenuContent>
+                                            ) : (
+                                                <DropdownMenuContent className="w-[153.88px]">
+                                                    <DropdownMenuLabel>Salam, {session?.user?.name}</DropdownMenuLabel>
+                                                    <DropdownMenuSeparator />
+                                                    <DropdownMenuItem variant="destructive" onSelect={() => signOut({ callbackUrl: "/" })}>
+                                                        <LogOut />
+                                                        Çıxış
+                                                    </DropdownMenuItem>
+                                                </DropdownMenuContent>
+                                            )
+                                        }
+                                    </DropdownMenu>
                                 )
-                        }
+                            }
+                        </div>
                         <ModeToggle />
                     </div>
                 </div>
