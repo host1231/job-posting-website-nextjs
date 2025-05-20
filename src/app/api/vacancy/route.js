@@ -43,54 +43,15 @@ export async function GET(request) {
 
         const skip = (page - 1) * limit;
 
-        const [vacancies, total, vacancyStats, companyStats] = await Promise.all([
+        const [vacancies, total] = await Promise.all([
             Vacancy.find(filters)
                 .populate("company")
                 .populate("categories")
                 .skip(skip)
                 .limit(limit)
                 .sort({ createdAt: -1 }),
-            Vacancy.countDocuments(filters),
-            Vacancy.aggregate([
-                {
-                    $group: {
-                        _id: {
-                            $dateToString: { format: "%Y-%m-%d", date: "$createdAt" }
-                        },
-                        vacancies: { $sum: 1 }
-                    }
-                }
-            ]),
-
-            Company.aggregate([
-                {
-                    $group: {
-                        _id: {
-                            $dateToString: { format: "%Y-%m-%d", date: "$createdAt" }
-                        },
-                        company: { $sum: 1 }
-                    }
-                }
-            ])
+            Vacancy.countDocuments(filters)
         ]);
-
-        const chartDataMap = new Map();
-
-        // Вакансии
-        vacancyStats.forEach(item => {
-            chartDataMap.set(item._id, { date: item._id, vacancies: item.vacancies, company: 0 });
-        });
-
-        // Компании
-        companyStats.forEach(item => {
-            if (chartDataMap.has(item._id)) {
-                chartDataMap.get(item._id).company = item.company;
-            } else {
-                chartDataMap.set(item._id, { date: item._id, vacancies: 0, company: item.company });
-            }
-        });
-
-        const chartData = Array.from(chartDataMap.values()).sort((a, b) => new Date(a.date) - new Date(b.date));
 
 
         return NextResponse.json({
@@ -98,7 +59,6 @@ export async function GET(request) {
             total,
             totalPages: Math.ceil(total / limit),
             currentPage: page,
-            chartData
         }, { status: 200 });
     } catch (error) {
         console.log(error);

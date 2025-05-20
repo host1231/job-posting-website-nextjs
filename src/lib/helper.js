@@ -41,8 +41,7 @@ export const companySchema = z.object({
     .max(100, "Название слишком длинное"),
   description: z
     .string()
-    .min(10, "Описание слишком короткое")
-    .max(1000, "Описание слишком длинное"),
+    .min(10, "Описание слишком короткое"),
   logo: z
     .any()
     .refine(file => file instanceof File || file === undefined, {

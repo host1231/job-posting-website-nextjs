@@ -16,7 +16,6 @@ import VacancyItem from "./cards/VacancyItem";
 import VacancyItemSkeleton from "./cards/skeletons/VacancyItemSkeleton";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "./ui/dialog";
 import CheckboxMenuForm from "./CheckboxMenuForm";
-import { ChartCustom } from "./ChartCustom";
 
 
 const HomeClient = () => {
@@ -36,7 +35,7 @@ const HomeClient = () => {
     const [mobileEducationF, setMobileEducationF] = useState([]);
     const [mobileExperienceF, setMobileExperienceF] = useState([]);
 
-    const [open, setOpen] = useState(false);
+    const [open, setOpen] = useState(null);
 
 
     const { data, error, isLoading, isFetching } = useGetVacanciesQuery({
@@ -153,9 +152,6 @@ const HomeClient = () => {
     return (
         <section className="py-5 md:py-10">
             <div className="container">
-                <div>
-                    {/* <ChartCustom /> */}
-                </div>
                 <div className="py-10 px-5 shadow-md my-6 rounded-md border bg-background">
                     <div className="">
                         <h2 className="title mb-1">Vakansiyalar</h2>

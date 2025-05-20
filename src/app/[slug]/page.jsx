@@ -119,11 +119,12 @@ const VacancyAbout = () => {
                                     <div className="hidden lg:block">
                                         <div className="my-6">
                                             <h3 className="text-2xl font-semibold mb-3">Təsvir</h3>
-                                            <p className="text-muted-foreground">{vacancy?.description}</p>
+                                            <div className="text-muted-foreground" dangerouslySetInnerHTML={{ __html: vacancy?.description || '' }} />
+
                                         </div>
                                         <div className="my-6">
                                             <h3 className="text-2xl font-semibold mb-3">Tələblər</h3>
-                                            <p className="text-muted-foreground">{vacancy?.requirements}</p>
+                                            <div className="text-muted-foreground" dangerouslySetInnerHTML={{ __html: vacancy?.requirements || '' }} />
                                         </div>
                                     </div>
                                 )
