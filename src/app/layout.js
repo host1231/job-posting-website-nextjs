@@ -6,6 +6,7 @@ import AuthProvider from "@/components/providers/AuthProvider";
 import ReduxProvider from "@/components/providers/ReduxProvider";
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import Head from "next/head";
+import { Analytics } from '@vercel/analytics/next';
 
 const inter = Inter({
   variable: "--font-inter",
@@ -36,8 +37,10 @@ export default function RootLayout({ children }) {
             >
               <HeaderWrapper />
               <main>{children}</main>
+              
               <Toaster />
             </ThemeProvider>
+            <Analytics />
           </body>
         </AuthProvider>
       </ReduxProvider>
