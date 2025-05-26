@@ -127,12 +127,15 @@
     @apply bg-[#161616];
   }
 
-  ul, ol {
-    @apply list-image-[url(https://vuxz9tznczckbg5g.public.blob.vercel-storage.com/user-round-check%20%283%29-KNV7XjDxiUnsDOhuQSJbfgdkMZsaQc.svg)]  pl-6
+  ul {
+    @apply list-disc pl-6
+  }
+  ol {
+    @apply list-decimal pl-6
   }
 
   .pagination ul, ol {
-    @apply list-image-none
+    @apply list-none
   } 
 }
 
