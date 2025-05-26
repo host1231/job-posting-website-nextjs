@@ -94,7 +94,6 @@ const HomeClient = () => {
         const params = new URLSearchParams();
         setOpen(false);
 
-
         if (category.length) params.set("category", category.join(","));
         if (typeF.length) params.set("types", typeF.join(","));
         if (educationF.length) params.set("education", educationF.join(","));
@@ -107,6 +106,10 @@ const HomeClient = () => {
         router.push(`?${params.toString()}`);
 
     }, [category, typeF, educationF, experienceF, search, page]);
+
+    useEffect(() => {
+        setPage(1);
+    }, [category, typeF, educationF, experienceF, search])
 
     useEffect(() => {
         const timeout = setTimeout(() => {
@@ -144,6 +147,7 @@ const HomeClient = () => {
         setMobileExperienceF([]);
 
         router.push("/");
+        setPage(1)
     }
 
     return (
