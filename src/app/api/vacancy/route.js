@@ -4,7 +4,6 @@ import Company from "@/models/Company";
 import Category from "@/models/Category";
 import Vacancy from "@/models/Vacancy";
 import { NextResponse } from "next/server";
-import { getServerSession } from "next-auth";
 import isAdmin from "@/lib/auth";
 
 export async function GET(request) {
@@ -43,14 +42,16 @@ export async function GET(request) {
 
         const skip = (page - 1) * limit;
 
-        const [vacancies, total] = await Promise.all([
+        const [vacancies, total, totalVacancies, totalCompanies] = await Promise.all([
             Vacancy.find(filters)
                 .populate("company")
                 .populate("categories")
                 .skip(skip)
                 .limit(limit)
                 .sort({ createdAt: -1 }),
-            Vacancy.countDocuments(filters)
+            Vacancy.countDocuments(filters),
+            Vacancy.countDocuments(),
+            Company.countDocuments()
         ]);
 
 
@@ -59,6 +60,8 @@ export async function GET(request) {
             total,
             totalPages: Math.ceil(total / limit),
             currentPage: page,
+            totalVacancies,
+            totalCompanies
         }, { status: 200 });
     } catch (error) {
         console.log(error);

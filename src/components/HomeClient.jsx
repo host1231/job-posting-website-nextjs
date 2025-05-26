@@ -16,6 +16,7 @@ import VacancyItem from "./cards/VacancyItem";
 import VacancyItemSkeleton from "./cards/skeletons/VacancyItemSkeleton";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "./ui/dialog";
 import CheckboxMenuForm from "./CheckboxMenuForm";
+import { Skeleton } from "./ui/skeleton";
 
 
 const HomeClient = () => {
@@ -153,6 +154,15 @@ const HomeClient = () => {
     return (
         <section className="py-5 md:py-10">
             <div className="container">
+                <div className="text-center">
+                {
+                    data ? (
+                        <h6 className="text-sm md:text-lg text-muted-foreground italic">{data?.totalVacancies} aktiv vakansiya {data?.totalCompanies} şirkət tərəfindən</h6>
+                    ) : (
+                        <Skeleton className="w-xl h-7 mx-auto" />
+                    )
+                }
+                </div>
                 <div className="py-10 px-5 shadow-md my-6 rounded-md border bg-background">
                     <div className="">
                         <h2 className="title mb-1">Vakansiyalar</h2>

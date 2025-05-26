@@ -1,7 +1,8 @@
 import connectDB from "@/config/connectDB";
 import isAdmin from "@/lib/auth";
+import Category from "@/models/Category";
+import Company from "@/models/Company";
 import Vacancy from "@/models/Vacancy";
-import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 
 export async function DELETE(request, { params }) {
