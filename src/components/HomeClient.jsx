@@ -196,8 +196,8 @@ const HomeClient = () => {
                                         <div className="h-[60vh] overflow-y-auto">
                                             <CheckboxMenuForm title="Kateqoriyanı seçin" data={categories} value={mobileCategory} onChange={setMobileCategory} />
                                             <CheckboxMenuForm title="Vakansiya növü" data={types} value={mobileTypeF} onChange={setMobileTypeF} />
-                                            <CheckboxMenuForm title="Təcrübə" data={educations} value={mobileEducationF} onChange={setMobileEducationF} />
-                                            <CheckboxMenuForm title="Təhsil" data={experiences} value={mobileExperienceF} onChange={setMobileExperienceF} />
+                                            <CheckboxMenuForm title="Təhsil" data={educations} value={mobileEducationF} onChange={setMobileEducationF} />
+                                            <CheckboxMenuForm title="Təcrübə" data={experiences} value={mobileExperienceF} onChange={setMobileExperienceF} />
                                         </div>
                                         <DialogFooter>
                                             <Button onClick={applyFilter}>
