@@ -121,11 +121,6 @@ const HomeClient = () => {
         setPage(pageParam);
     }, [searchParams]);
 
-    useEffect(() => {
-        window.scrollTo({ top: 0, behavior: "smooth" });
-    }, [page]);
-
-
     const handleDelete = async (e, slug) => {
         try {
             e.preventDefault();
@@ -159,7 +154,7 @@ const HomeClient = () => {
                     data ? (
                         <h6 className="text-sm md:text-lg text-muted-foreground italic">{data?.totalVacancies} aktiv vakansiya {data?.totalCompanies} şirkət tərəfindən</h6>
                     ) : (
-                        <Skeleton className="w-xl h-7 mx-auto" />
+                        <Skeleton className="max-w-xl h-7 mx-auto" />
                     )
                 }
                 </div>

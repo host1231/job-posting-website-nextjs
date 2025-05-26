@@ -7,6 +7,7 @@ import ReduxProvider from "@/components/providers/ReduxProvider";
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import Head from "next/head";
 import { Analytics } from '@vercel/analytics/next';
+import ScrollToTop from "@/components/ScrollToTop";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -35,6 +36,7 @@ export default function RootLayout({ children }) {
               enableSystem
               disableTransitionOnChange
             >
+              <ScrollToTop />
               <HeaderWrapper />
               <main>{children}</main>
               
