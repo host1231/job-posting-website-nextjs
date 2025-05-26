@@ -106,6 +106,8 @@ const HomeClient = () => {
 
         router.push(`?${params.toString()}`);
 
+        setPage(1);
+
     }, [category, typeF, educationF, experienceF, search, page]);
 
     useEffect(() => {
