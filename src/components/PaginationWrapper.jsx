@@ -3,7 +3,7 @@ import { Pagination, PaginationContent, PaginationItem, PaginationLink, Paginati
 
 const PaginationWrapper = ({ page, setPage, totalPages }) => {
     return (
-        <Pagination className="my-6 text-neutral-600">
+        <Pagination className="my-6 text-neutral-600 pagination">
             <PaginationContent>
                 <PaginationItem>
                     <PaginationPrevious
