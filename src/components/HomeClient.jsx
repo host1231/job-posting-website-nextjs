@@ -170,8 +170,8 @@ const HomeClient = () => {
                         </div>
                         <div className="hidden md:flex gap-3 my-3 overflow-x-auto items-center">
                             <DropdownMenuCheckbox title="Vakansiya növü" data={types} value={typeF} onChange={setTypeF} />
-                            <DropdownMenuCheckbox title="Təcrübə" data={educations} value={educationF} onChange={setEducationF} />
-                            <DropdownMenuCheckbox title="Təhsil" data={experiences} value={experienceF} onChange={setExperienceF} />
+                            <DropdownMenuCheckbox title="Təhsil" data={educations} value={educationF} onChange={setEducationF} />
+                            <DropdownMenuCheckbox title="Təcrübə" data={experiences} value={experienceF} onChange={setExperienceF} />
                             <Button variant="destructive" className="ml-8" onClick={resetFilter}>
                                 <Trash2 />
                                 Sıfırla
